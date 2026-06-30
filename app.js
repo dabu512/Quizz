@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     qNumberBadgeEl.textContent = `Câu ${q.id}`;
     qTitleEl.textContent = q.title;
-    footerCounterEl.textContent = `${q.id} / ${total}`;
+    footerCounterEl.textContent = `${index + 1} / ${total}`;
 
     if (q.isMultiple) {
       qTypeBadgeEl.textContent = 'Chọn nhiều đáp án';
