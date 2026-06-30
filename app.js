@@ -1,23 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Check if quizQuestions data is loaded
-  if (typeof quizQuestions === 'undefined' || !Array.isArray(quizQuestions)) {
-    alert('Không tìm thấy dữ liệu câu hỏi!');
+  if (typeof allQuizSets === 'undefined' || !Array.isArray(allQuizSets)) {
+    alert('Không tìm thấy dữ liệu bài thi!');
     return;
   }
 
-  const TOTAL_QUESTIONS = quizQuestions.length;
+  // Application State
+  let currentQuiz = null;
   let currentIndex = 0;
+  let userAnswers = [];
 
-  // Track state for all questions
-  // userAnswers[i] = { answered: boolean, selected: number[], isCorrect: boolean }
-  let userAnswers = Array.from({ length: TOTAL_QUESTIONS }, () => ({
-    answered: false,
-    selected: [],
-    isCorrect: false
-  }));
+  // DOM Screens
+  const menuScreen = document.getElementById('menu-screen');
+  const quizScreen = document.getElementById('quiz-screen');
 
-  // DOM Elements
+  // Menu Elements
+  const quizCardsContainer = document.getElementById('quiz-cards-container');
+  const quizCountBadge = document.getElementById('quiz-count-badge');
+
+  // Quiz Elements
+  const backToMenuBtn = document.getElementById('back-to-menu-btn');
+  const activeQuizTitle = document.getElementById('active-quiz-title');
+  const activeQuizDesc = document.getElementById('active-quiz-desc');
+  const resetBtn = document.getElementById('reset-btn');
+  const redoWrongBtn = document.getElementById('redo-wrong-btn');
+
   const navGridEl = document.getElementById('navigator-grid');
+  const navTotalCount = document.getElementById('nav-total-count');
   const qNumberBadgeEl = document.getElementById('q-number-badge');
   const qTypeBadgeEl = document.getElementById('q-type-badge');
   const qTitleEl = document.getElementById('q-title');
@@ -29,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const prevBtn = document.getElementById('prev-btn');
   const nextBtn = document.getElementById('next-btn');
   const footerCounterEl = document.getElementById('footer-counter');
-  const resetBtn = document.getElementById('reset-btn');
 
   // Stats Elements
   const statCompletedEl = document.getElementById('stat-completed');
@@ -37,15 +44,86 @@ document.addEventListener('DOMContentLoaded', () => {
   const statWrongEl = document.getElementById('stat-wrong');
   const statAccuracyEl = document.getElementById('stat-accuracy');
 
-  // Initialize App
-  initNavigatorGrid();
-  loadQuestion(currentIndex);
-  updateStats();
+  // 1. Initialize Main Menu
+  renderMenu();
 
-  // 1. Initialize 50 Question Navigation Buttons
+  function renderMenu() {
+    quizCountBadge.textContent = `${allQuizSets.length} Bài thi`;
+    quizCardsContainer.innerHTML = '';
+
+    allQuizSets.forEach(quiz => {
+      const card = document.createElement('div');
+      card.className = 'quiz-select-card';
+      card.innerHTML = `
+        <div class="card-top-info">
+          <span class="quiz-file-badge">📄 ${quiz.filename}</span>
+          <h3 class="quiz-card-title">${quiz.title}</h3>
+          <p class="quiz-card-desc">${quiz.description}</p>
+        </div>
+        <div class="card-bottom-info">
+          <span class="quiz-meta-stat">📝 ${quiz.questionsCount} câu hỏi</span>
+          <button class="btn btn-primary start-quiz-btn" data-id="${quiz.id}">
+            Bắt đầu làm bài →
+          </button>
+        </div>
+      `;
+
+      card.querySelector('.start-quiz-btn').addEventListener('click', () => {
+        startQuiz(quiz);
+      });
+
+      quizCardsContainer.appendChild(card);
+    });
+  }
+
+  // 2. Start Quiz Mode
+  function startQuiz(quiz, loadedAnswers = null, loadedIndex = 0) {
+    currentQuiz = quiz;
+    currentIndex = loadedIndex;
+    
+    // Reset or load user answers state for this quiz
+    if (loadedAnswers) {
+      userAnswers = loadedAnswers;
+    } else {
+      userAnswers = Array.from({ length: quiz.questions.length }, () => ({
+        answered: false,
+        selected: [],
+        isCorrect: false
+      }));
+    }
+
+    activeQuizTitle.textContent = quiz.title;
+    activeQuizDesc.textContent = quiz.description;
+    navTotalCount.textContent = `${quiz.questions.length} câu`;
+
+    // Switch Screens
+    menuScreen.classList.add('hidden');
+    quizScreen.classList.remove('hidden');
+
+    initNavigatorGrid();
+    loadQuestion(currentIndex);
+    updateStats();
+    saveStateToLocalStorage();
+  }
+
+  // 3. Back to Menu
+  backToMenuBtn.addEventListener('click', () => {
+    if (userAnswers.some(ans => ans.answered)) {
+      if (!confirm('Bạn có chắc muốn quay về danh sách bài thi? Kết quả bài đang làm sẽ bị xoá.')) {
+        return;
+      }
+    }
+    clearLocalStorageState();
+    quizScreen.classList.add('hidden');
+    menuScreen.classList.remove('hidden');
+  });
+
+  // 4. Navigator Grid Init
   function initNavigatorGrid() {
     navGridEl.innerHTML = '';
-    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+    const total = currentQuiz.questions.length;
+
+    for (let i = 0; i < total; i++) {
       const btn = document.createElement('button');
       btn.className = 'nav-btn';
       btn.textContent = i + 1;
@@ -53,12 +131,12 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', () => {
         currentIndex = i;
         loadQuestion(currentIndex);
+        saveStateToLocalStorage();
       });
       navGridEl.appendChild(btn);
     }
   }
 
-  // Update Navigator Buttons Visual State
   function updateNavigatorState() {
     const buttons = navGridEl.querySelectorAll('.nav-btn');
     buttons.forEach((btn, idx) => {
@@ -69,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const state = userAnswers[idx];
-      if (state.answered) {
+      if (state && state.answered) {
         if (state.isCorrect) {
           btn.classList.add('correct');
         } else {
@@ -79,15 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 2. Load Question View
+  // 5. Load Question
   function loadQuestion(index) {
-    const q = quizQuestions[index];
+    const q = currentQuiz.questions[index];
     const state = userAnswers[index];
+    const total = currentQuiz.questions.length;
 
-    // Update Badges & Titles
     qNumberBadgeEl.textContent = `Câu ${q.id}`;
     qTitleEl.textContent = q.title;
-    footerCounterEl.textContent = `${q.id} / ${TOTAL_QUESTIONS}`;
+    footerCounterEl.textContent = `${q.id} / ${total}`;
 
     if (q.isMultiple) {
       qTypeBadgeEl.textContent = 'Chọn nhiều đáp án';
@@ -97,14 +175,11 @@ document.addEventListener('DOMContentLoaded', () => {
       qTypeBadgeEl.classList.add('single');
     }
 
-    // Prev/Next buttons state
     prevBtn.disabled = index === 0;
-    nextBtn.disabled = index === TOTAL_QUESTIONS - 1;
+    nextBtn.disabled = index === total - 1;
 
-    // Render Options
     renderOptions(q, state);
 
-    // Render Action Bar & Explanation
     if (q.isMultiple && !state.answered) {
       actionBarEl.classList.remove('hidden');
     } else {
@@ -121,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateNavigatorState();
   }
 
-  // 3. Render Options List
+  // 6. Render Options
   function renderOptions(q, state) {
     qOptionsEl.innerHTML = '';
 
@@ -141,7 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
         optionItem.classList.add('selected');
       }
 
-      // If question is already answered, show correct/wrong feedback & disable inputs
       if (state.answered) {
         optionItem.classList.add('disabled');
         input.disabled = true;
@@ -155,7 +229,6 @@ document.addEventListener('DOMContentLoaded', () => {
           optionItem.classList.add('wrong-answer');
         }
 
-        // Add status icon
         const statusIcon = document.createElement('span');
         statusIcon.className = 'option-status-icon';
         if (isTargetCorrect) {
@@ -165,7 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         optionItem.appendChild(statusIcon);
       } else {
-        // Handle Option Click when not answered yet
         optionItem.addEventListener('click', (e) => {
           if (e.target !== input) {
             input.checked = q.isMultiple ? !input.checked : true;
@@ -176,7 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const label = document.createElement('label');
       label.className = 'option-text';
-      label.htmlFor = `opt_${q.id}_${optIdx}`;
       label.textContent = optText;
 
       optionItem.prepend(input);
@@ -186,13 +257,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. Handle Selection Logic
+  // 7. Handle Selection
   function handleOptionSelection(q, optIdx) {
     const state = userAnswers[currentIndex];
     if (state.answered) return;
 
     if (q.isMultiple) {
-      // Toggle selection in state
       const existsIdx = state.selected.indexOf(optIdx);
       if (existsIdx > -1) {
         state.selected.splice(existsIdx, 1);
@@ -200,7 +270,6 @@ document.addEventListener('DOMContentLoaded', () => {
         state.selected.push(optIdx);
       }
       
-      // Update UI selection classes
       const optionItems = qOptionsEl.querySelectorAll('.option-item');
       optionItems.forEach((item, idx) => {
         if (state.selected.includes(idx)) {
@@ -209,16 +278,16 @@ document.addEventListener('DOMContentLoaded', () => {
           item.classList.remove('selected');
         }
       });
+      saveStateToLocalStorage();
     } else {
-      // Single choice -> set selected and validate immediately
       state.selected = [optIdx];
       validateAnswer(q);
     }
   }
 
-  // 5. Submit Multiple Choice Answer
+  // 8. Submit Check for Multiple Choice
   submitCheckBtn.addEventListener('click', () => {
-    const q = quizQuestions[currentIndex];
+    const q = currentQuiz.questions[currentIndex];
     const state = userAnswers[currentIndex];
 
     if (state.selected.length === 0) {
@@ -229,12 +298,11 @@ document.addEventListener('DOMContentLoaded', () => {
     validateAnswer(q);
   });
 
-  // 6. Validate Answer Correctness
+  // 9. Validate Answer
   function validateAnswer(q) {
     const state = userAnswers[currentIndex];
     state.answered = true;
 
-    // Check if user selected exact match of correct options
     const targetSet = new Set(q.correct);
     const userSet = new Set(state.selected);
 
@@ -249,13 +317,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     state.isCorrect = isCorrect;
 
-    // Reload active question to show evaluation and explanation
     loadQuestion(currentIndex);
     updateStats();
+    saveStateToLocalStorage();
   }
 
-  // 7. Update Dashboard Statistics
+  // 10. Update Stats
   function updateStats() {
+    if (!currentQuiz) return;
+    const total = currentQuiz.questions.length;
+
     let completed = 0;
     let correct = 0;
     let wrong = 0;
@@ -268,33 +339,42 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    statCompletedEl.textContent = `${completed} / ${TOTAL_QUESTIONS}`;
+    statCompletedEl.textContent = `${completed} / ${total}`;
     statCorrectEl.textContent = correct;
     statWrongEl.textContent = wrong;
 
     const accuracy = completed > 0 ? Math.round((correct / completed) * 100) : 0;
     statAccuracyEl.textContent = `${accuracy}%`;
+
+    // Show/hide Redo Wrong Questions button
+    if (completed === total && wrong > 0) {
+      redoWrongBtn.classList.remove('hidden');
+    } else {
+      redoWrongBtn.classList.add('hidden');
+    }
   }
 
-  // 8. Navigation Events
+  // 11. Navigation Buttons
   prevBtn.addEventListener('click', () => {
     if (currentIndex > 0) {
       currentIndex--;
       loadQuestion(currentIndex);
+      saveStateToLocalStorage();
     }
   });
 
   nextBtn.addEventListener('click', () => {
-    if (currentIndex < TOTAL_QUESTIONS - 1) {
+    if (currentIndex < currentQuiz.questions.length - 1) {
       currentIndex++;
       loadQuestion(currentIndex);
+      saveStateToLocalStorage();
     }
   });
 
-  // 9. Reset Quiz Event
+  // 12. Reset Event
   resetBtn.addEventListener('click', () => {
-    if (confirm('Bạn có chắc chắn muốn làm lại bài trắc nghiệm từ đầu? Tất cả kết quả sẽ bị xóa.')) {
-      userAnswers = Array.from({ length: TOTAL_QUESTIONS }, () => ({
+    if (confirm('Bạn có chắc chắn muốn làm lại bài trắc nghiệm này từ đầu?')) {
+      userAnswers = Array.from({ length: currentQuiz.questions.length }, () => ({
         answered: false,
         selected: [],
         isCorrect: false
@@ -302,6 +382,77 @@ document.addEventListener('DOMContentLoaded', () => {
       currentIndex = 0;
       loadQuestion(currentIndex);
       updateStats();
+      saveStateToLocalStorage();
     }
   });
+
+  // 13. Redo Wrong Questions Event
+  redoWrongBtn.addEventListener('click', () => {
+    const wrongIndices = [];
+    userAnswers.forEach((ans, idx) => {
+      if (ans.answered && !ans.isCorrect) {
+        wrongIndices.push(idx);
+      }
+    });
+
+    if (wrongIndices.length === 0) return;
+
+    if (confirm(`Bạn có muốn làm lại ${wrongIndices.length} câu hỏi đã trả lời sai?`)) {
+      wrongIndices.forEach(idx => {
+        userAnswers[idx] = {
+          answered: false,
+          selected: [],
+          isCorrect: false
+        };
+      });
+
+      // Find the first wrong question index
+      currentIndex = wrongIndices[0];
+      loadQuestion(currentIndex);
+      updateStats();
+      saveStateToLocalStorage();
+    }
+  });
+
+  // Local Storage Helper Functions
+  function saveStateToLocalStorage() {
+    if (currentQuiz) {
+      localStorage.setItem('quiz_currentQuizId', currentQuiz.id);
+      localStorage.setItem('quiz_currentIndex', currentIndex);
+      localStorage.setItem('quiz_userAnswers', JSON.stringify(userAnswers));
+    }
+  }
+
+  function clearLocalStorageState() {
+    localStorage.removeItem('quiz_currentQuizId');
+    localStorage.removeItem('quiz_currentIndex');
+    localStorage.removeItem('quiz_userAnswers');
+  }
+
+  // Restore quiz from LocalStorage if exists on init
+  const savedQuizId = localStorage.getItem('quiz_currentQuizId');
+  if (savedQuizId) {
+    const quiz = allQuizSets.find(q => q.id === savedQuizId);
+    if (quiz) {
+      const savedIndexStr = localStorage.getItem('quiz_currentIndex');
+      const savedIndex = savedIndexStr ? parseInt(savedIndexStr, 10) : 0;
+      
+      let savedAnswers = null;
+      try {
+        const savedAnswersStr = localStorage.getItem('quiz_userAnswers');
+        if (savedAnswersStr) {
+          savedAnswers = JSON.parse(savedAnswersStr);
+          if (!Array.isArray(savedAnswers) || savedAnswers.length !== quiz.questions.length) {
+            savedAnswers = null;
+          }
+        }
+      } catch (e) {
+        console.error("Error parsing saved answers:", e);
+      }
+      
+      startQuiz(quiz, savedAnswers, savedIndex);
+    } else {
+      clearLocalStorageState();
+    }
+  }
 });
