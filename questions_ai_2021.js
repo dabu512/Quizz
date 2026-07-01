@@ -1,10 +1,10 @@
-// Auto-generated quiz dataset from Chương 1 - 2.docx
+// Auto-generated quiz dataset from AI_2021.docx
 if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
   allQuizSets.push({
-  "id": "quiz_1",
-  "title": "Trắc nghiệm Chương 1 - 2",
-  "description": "Bộ câu hỏi trắc nghiệm ôn tập Chương 1 và Chương 2 môn Trí tuệ Nhân tạo.",
-  "filename": "Chương 1 - 2.docx",
+  "id": "quiz_2",
+  "title": "Đề thi trắc nghiệm AI 2021",
+  "description": "Đề thi trắc nghiệm môn Trí tuệ Nhân tạo năm học 2020-2021 (kèm giải thích chi tiết).",
+  "filename": "AI_2021.docx",
   "questionsCount": 30,
   "questions": [
     {
@@ -17,11 +17,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. k-NN chỉ sử dụng cho phân loại"
       ],
       "correct": [
-        0,
         2
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, C."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: C. Càng nhiều thuộc tính thừa (nhiễu) càng dễ làm méo mó hàm khoảng cách vật lý của $k$-NN."
     },
     {
       "id": 2,
@@ -35,7 +34,7 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         1
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: B."
+      "explanation": "Đáp án đúng là: B. False: BFS mở rộng theo tầng nên tiếp cận nghiệm ở độ sâu cố định nhanh hơn lũy thừa thời gian của DFS khi đi sai nhánh."
     },
     {
       "id": 3,
@@ -47,10 +46,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. cạnh (NT → T) là phù hợp."
       ],
       "correct": [
-        2
+        0,
+        3
       ],
-      "isMultiple": false,
-      "explanation": "Đáp án đúng là: C."
+      "isMultiple": true,
+      "explanation": "Đáp án đúng là: A, D. (Chọn nhiều) Cạnh (SA $\\rightarrow$ NSW) sai vì miền giá trị đã bị lệch. Cạnh (NT $\\rightarrow$ T) sai vì Tasmania là đảo, không có biên giới (cạnh) chung với NT."
     },
     {
       "id": 4,
@@ -62,10 +62,12 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. Thiếu các hệ thống lưu trữ dữ liệu lớn"
       ],
       "correct": [
-        1
+        0,
+        2,
+        3
       ],
-      "isMultiple": false,
-      "explanation": "Đáp án đúng là: B."
+      "isMultiple": true,
+      "explanation": "Đáp án đúng là: A, C, D. (Chọn nhiều) AI Winter lần 1 xảy ra do máy tính quá yếu (a), các nghiên cứu Perceptron mạng nơ-ron bị đóng băng (c) và thiếu hạ tầng lưu trữ (d)."
     },
     {
       "id": 5,
@@ -77,11 +79,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. Kiến trúc"
       ],
       "correct": [
-        0,
-        2
+        0
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, C."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: A. Hệ thức kinh điển: $\\text{Tác tử} = \\text{Kiến trúc} + \\text{Chương trình}$."
     },
     {
       "id": 6,
@@ -93,10 +94,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. Alpha≤v(n)≤Beta"
       ],
       "correct": [
-        2
+        3
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: C."
+      "explanation": "Đáp án đúng là: D. Trạng thái an toàn, nằm trong dải lọc không bị cắt tỉa: $\\alpha \\le v(n) \\le \\beta$."
     },
     {
       "id": 7,
@@ -108,10 +109,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
       ],
       "correct": [
         0,
-        2
+        1
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, C."
+      "explanation": "Đáp án đúng là: A, B. (Chọn nhiều) Naïve Bayes xử lý được cả biến liên tục (dùng Gauss). Phát biểu (b) sai vì định lý yêu cầu các thuộc tính phải độc lập có điều kiện khi biết lớp."
     },
     {
       "id": 8,
@@ -126,7 +127,7 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         2
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: C."
+      "explanation": "Đáp án đúng là: C. Biến chưa được gán giá trị (Unassigned-Variable) trong bài toán ô chữ chính là bản thân các ô chữ trống."
     },
     {
       "id": 9,
@@ -139,11 +140,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. 15"
       ],
       "correct": [
-        0,
-        3
+        1
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, D."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: B. Với bài toán tô màu bản đồ Úc, đồ thị 3-màu quanh chu trình lục giác nội địa luôn có đúng 6 phương án thỏa mãn."
     },
     {
       "id": 10,
@@ -158,7 +158,7 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         2
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: C."
+      "explanation": "Đáp án đúng là: C. Tổ hợp rời rạc biểu diễn logic chọn đúng 2 trong 3 đối tượng mang mệnh đề khẳng định."
     },
     {
       "id": 11,
@@ -171,11 +171,12 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Car(x) là vị từ (predicate)"
       ],
       "correct": [
-        0,
-        2
+        2,
+        3,
+        4
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, C."
+      "explanation": "Đáp án đúng là: C, D, E. (Chọn nhiều) $x$ là biến (c); Car đại diện cho quan hệ/vị từ (d); biểu thức Car(x) là cấu trúc vị từ hoàn chỉnh (e)."
     },
     {
       "id": 12,
@@ -186,10 +187,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "C. Dữ liệu huấn luyện không thể thiếu các giá trị cho các thuộc tính"
       ],
       "correct": [
-        2
+        0,
+        1
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: C."
+      "explanation": "Đáp án đúng là: A, B. (Chọn nhiều) Cây quyết định chống nhiễu tốt (a) và dùng độ thu hoạch thông tin (Information Gain) làm tiêu chí chia nút (b)."
     },
     {
       "id": 13,
@@ -200,11 +202,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "C. đúng đắn (valid)"
       ],
       "correct": [
-        0,
-        2
+        0
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, C."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: A. Satisfiable: Tồn tại ít nhất một bộ giá trị (ví dụ gán tiền đề sai) khiến toàn bộ phép kéo theo đúng."
     },
     {
       "id": 14,
@@ -216,10 +217,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. Để giải quyết những vấn đề nhân tạo"
       ],
       "correct": [
+        0,
         1
       ],
-      "isMultiple": false,
-      "explanation": "Đáp án đúng là: B."
+      "isMultiple": true,
+      "explanation": "Đáp án đúng là: A, B. (Chọn nhiều) Mục tiêu hành động thông minh để giải quyết bài toán phức tạp (a) và nghiên cứu bản chất các loại trí tuệ (b)."
     },
     {
       "id": 15,
@@ -232,11 +234,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. 1"
       ],
       "correct": [
-        0,
-        2
+        1
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, C."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: B. Khoảng cách: $\\sqrt{(3 - (-1))^2 + (4 - 4)^2} = \\sqrt{16} = 4$."
     },
     {
       "id": 16,
@@ -247,10 +248,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "C. Logic vị từ bậc 1 cung cấp thông tin bậc nhất về tri thức của chúng ta"
       ],
       "correct": [
-        3
+        1
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: D."
+      "explanation": "Đáp án đúng là: B. Nhờ cơ chế lượng từ ($\\forall, \\exists$) và biến số, FOL biểu diễn được tập tri thức vô hạn so với logic mệnh đề tĩnh."
     },
     {
       "id": 17,
@@ -262,11 +263,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. Không có câu trả lời nào (ở trên/dưới) phù hợp"
       ],
       "correct": [
-        0,
-        2
+        1
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, C."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: B. Tìm kiếm giới hạn độ sâu (DLS) kế thừa hoàn toàn cơ chế hoạt động của DFS, sử dụng bộ nhớ Ngăn xếp (Stack)."
     },
     {
       "id": 18,
@@ -278,10 +278,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. (A∨B)→(B∨A)"
       ],
       "correct": [
-        2
+        1,
+        3
       ],
-      "isMultiple": false,
-      "explanation": "Đáp án đúng là: C."
+      "isMultiple": true,
+      "explanation": "Đáp án đúng là: B, D. (Chọn nhiều) (b) là luật phản chứng (Contraposition) và (d) là tính chất giao hoán của phép Tuyển."
     },
     {
       "id": 19,
@@ -293,11 +294,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. Lý thuyết học"
       ],
       "correct": [
-        0,
         2
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, C."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: C. Tác tử phản xạ đơn giản (Simple reflex) hoạt động theo cơ chế phản xạ tức thì, hoàn toàn phớt lờ quá khứ."
     },
     {
       "id": 20,
@@ -309,10 +309,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. Tất cả các câu trả lời ở trên (hay dưới) đây"
       ],
       "correct": [
-        2
+        1
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: C."
+      "explanation": "Đáp án đúng là: B. Leo đồi dừng ngay lập tức khi mọi trạng thái lân cận xung quanh đều bằng hoặc tệ hơn trạng thái hiện tại."
     },
     {
       "id": 21,
@@ -327,11 +327,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Giải thuật tìm kiếm theo chiều sâu (Depth-First Search) trả về đường đi: A, B, F"
       ],
       "correct": [
-        0,
-        2
+        5
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, C."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: F. Thuật toán UCS mở rộng theo chi phí thực tế $g(n)$ tăng dần nên luôn trả về đường đi tối ưu $A \\rightarrow C \\rightarrow G$."
     },
     {
       "id": 22,
@@ -343,10 +342,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. Tất cả các thành phần đề cập"
       ],
       "correct": [
-        2
+        3
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: C."
+      "explanation": "Đáp án đúng là: D. Bao gồm đầy đủ 4 tiêu chí: Thời gian, Bộ nhớ, Tính hoàn chỉnh, Tính tối ưu."
     },
     {
       "id": 23,
@@ -362,7 +361,7 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         2
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, C."
+      "explanation": "Đáp án đúng là: A, C. (Chọn nhiều) Rất tốn chi phí thu thập luật thủ công từ chuyên gia (a) và dễ gây mâu thuẫn hệ thống khi chèn luật mới (c)."
     },
     {
       "id": 24,
@@ -374,10 +373,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. Đánh giá (bình luận)"
       ],
       "correct": [
-        1
+        3
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: B."
+      "explanation": "Đáp án đúng là: D. Thành phần Đánh giá (Critic) đóng vai trò làm trọng tài chấm điểm hiệu năng để đẩy tín hiệu phản hồi ngược lại khối học."
     },
     {
       "id": 25,
@@ -389,11 +388,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. Độ phức tạp về thời gian lớn hơn tìm kiếm theo chiều sâu"
       ],
       "correct": [
-        1,
-        3
+        0,
+        1
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: B, D."
+      "explanation": "Đáp án đúng là: A, B. (Chọn nhiều) BFS luôn đảm bảo tính hoàn chỉnh (a) và đạt tính tối ưu nếu chi phí các bước đồng nhất (b)."
     },
     {
       "id": 26,
@@ -405,10 +404,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. Tại bước tìm kiếm cuối cùng (kết thúc của quá trình tìm kiếm)"
       ],
       "correct": [
-        3
+        1
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: D."
+      "explanation": "Đáp án đúng là: B. Alpha (ngưỡng dưới của MAX) và Beta (ngưỡng trên của MIN) được cập nhật liên tục khi duyệt dọc các nhánh cây."
     },
     {
       "id": 27,
@@ -418,11 +417,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "B. ∀x∃y:love(x,y)"
       ],
       "correct": [
-        0,
         1
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, B."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: B. Biểu diễn chuẩn: \"Với mọi người $x$, luôn tồn tại một đối tượng $y$ để $x$ yêu $y$\"."
     },
     {
       "id": 28,
@@ -434,10 +432,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. Tìm kiếm có thông tin đảm bảo tìm ra giải pháp tối ưu toàn cục"
       ],
       "correct": [
+        1,
         2
       ],
-      "isMultiple": false,
-      "explanation": "Đáp án đúng là: C."
+      "isMultiple": true,
+      "explanation": "Đáp án đúng là: B, C. (Chọn nhiều) Khai thác tri thức bổ trợ (Heuristic) cụ thể của bài toán (b) để chủ động cắt tỉa, tránh duyệt toàn bộ không gian (c)."
     },
     {
       "id": 29,
@@ -449,10 +448,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. (A↔B)⊨(¬A∨B)"
       ],
       "correct": [
+        2,
         3
       ],
-      "isMultiple": false,
-      "explanation": "Đáp án đúng là: D."
+      "isMultiple": true,
+      "explanation": "Đáp án đúng là: C, D. Dựa trên bảng chân trị: Phép hội (∧) kéo theo tương đương (↔) đúng; Tương đương (↔) kéo theo $(\\neg A \\lor B)$ đúng."
     },
     {
       "id": 30,
@@ -464,11 +464,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "D. Khi có một luật có thể được áp dụng ở bước suy diễn, cần phải chọn một trong những luật đó để áp dụng."
       ],
       "correct": [
-        0,
-        2
+        3
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, C."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: D. Định nghĩa cơ bản của Conflict Resolution: Quyết định lựa chọn duy nhất một luật tối ưu để kích hoạt khi có nhiều luật cùng thỏa mãn."
     }
   ]
 });

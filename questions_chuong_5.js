@@ -1,9 +1,9 @@
 // Auto-generated quiz dataset from Chương 5.docx
 if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
   allQuizSets.push({
-  "id": "quiz_2",
-  "title": "Trắc nghiệm Chương 5",
-  "description": "Bộ câu hỏi trắc nghiệm ôn tập Chương 5 (Phần Học máy, k-NN, Naïve Bayes) môn Trí tuệ Nhân tạo.",
+  "id": "quiz_3",
+  "title": "Trắc nghiệm Chương 5 (Học máy)",
+  "description": "Bộ câu hỏi trắc nghiệm ôn tập Chương 5 (Học máy, Naïve Bayes, k-NN) môn Trí tuệ Nhân tạo.",
   "filename": "Chương 5.docx",
   "questionsCount": 30,
   "questions": [

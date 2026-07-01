@@ -1,9 +1,9 @@
 // Auto-generated quiz dataset from Tổng hợp.docx
 if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
   allQuizSets.push({
-  "id": "quiz_3",
-  "title": "Trắc nghiệm Tổng hợp",
-  "description": "Bộ câu hỏi trắc nghiệm Tổng hợp ôn luyện môn Trí tuệ Nhân tạo.",
+  "id": "quiz_4",
+  "title": "Trắc nghiệm Tổng hợp AI",
+  "description": "Bộ câu hỏi trắc nghiệm ôn luyện tổng hợp môn Trí tuệ Nhân tạo.",
   "filename": "Tổng hợp.docx",
   "questionsCount": 30,
   "questions": [
@@ -18,10 +18,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Hoạt động mà không cần đến ngôn ngữ biểu diễn hình thức."
       ],
       "correct": [
-        3
+        0,
+        2
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: D."
+      "explanation": "Đáp án đúng là: A, C."
     },
     {
       "id": 2,
@@ -50,10 +51,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Tác tử đa cộng tác."
       ],
       "correct": [
-        1
+        2
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: B."
+      "explanation": "Đáp án đúng là: C."
     },
     {
       "id": 4,
@@ -66,10 +67,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Tác tử đơn lẻ trong môi trường tĩnh."
       ],
       "correct": [
-        4
+        1
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: E."
+      "explanation": "Đáp án đúng là: B."
     },
     {
       "id": 5,
@@ -83,10 +84,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
       ],
       "correct": [
         0,
-        4
+        2
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, E."
+      "explanation": "Đáp án đúng là: A, C."
     },
     {
       "id": 6,
@@ -99,10 +100,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Vì nó chỉ hoạt động trong môi trường đa tác tử cạnh tranh."
       ],
       "correct": [
-        1
+        2
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: B."
+      "explanation": "Đáp án đúng là: C."
     },
     {
       "id": 7,
@@ -115,11 +116,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Nó tự động gán giá trị số thực cho mọi trạng thái của môi trường."
       ],
       "correct": [
-        3,
-        4
+        0,
+        2
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: D, E."
+      "explanation": "Đáp án đúng là: A, C."
     },
     {
       "id": 8,
@@ -132,10 +133,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Để tạo ra các hành động khám phá nhằm sản sinh kinh nghiệm mới."
       ],
       "correct": [
-        1
+        2
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: B."
+      "explanation": "Đáp án đúng là: C."
     },
     {
       "id": 9,
@@ -149,10 +150,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
       ],
       "correct": [
         0,
-        1
+        3
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, B."
+      "explanation": "Đáp án đúng là: A, D."
     },
     {
       "id": 10,
@@ -165,10 +166,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Có thể quan sát hoàn toàn, Chiến lược, Phân đoạn, Rời rạc."
       ],
       "correct": [
-        3
+        2
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: D."
+      "explanation": "Đáp án đúng là: C."
     },
     {
       "id": 11,
@@ -181,10 +182,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Mọi hành động của tác tử đều dẫn đến một trạng thái hoàn toàn ngẫu nhiên."
       ],
       "correct": [
-        4
+        0,
+        2
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: E."
+      "explanation": "Đáp án đúng là: A, C."
     },
     {
       "id": 12,
@@ -197,10 +199,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Tác tử phải hoạt động trong một chuỗi dài các bước đan xen để đạt tới mục tiêu."
       ],
       "correct": [
-        4
+        2
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: E."
+      "explanation": "Đáp án đúng là: C."
     },
     {
       "id": 13,
@@ -213,10 +215,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Môi trường chiến lược là một dạng của môi trường ngẫu nhiên."
       ],
       "correct": [
-        1
+        0,
+        2
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: B."
+      "explanation": "Đáp án đúng là: A, C."
     },
     {
       "id": 14,
@@ -229,11 +232,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Khi các nhận thức chỉ cung cấp thông tin về một phần nhỏ của thế giới xung quanh."
       ],
       "correct": [
-        2,
-        3
+        1
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: C, D."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: B."
     },
     {
       "id": 15,
@@ -246,11 +248,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Máy đo huyết áp và các thiết bị cảm biến nhịp tim."
       ],
       "correct": [
-        1,
-        4
+        0,
+        2
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: B, E."
+      "explanation": "Đáp án đúng là: A, C."
     },
     {
       "id": 16,
@@ -263,10 +265,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Hiển thị màn hình các chỉ dẫn cho khách hàng."
       ],
       "correct": [
-        2
+        3
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: C."
+      "explanation": "Đáp án đúng là: D."
     },
     {
       "id": 17,
@@ -279,11 +281,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Nó không cần sử dụng bộ phận cảm biến để nhận biết môi trường."
       ],
       "correct": [
-        3,
-        4
+        0,
+        2
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: D, E."
+      "explanation": "Đáp án đúng là: A, C."
     },
     {
       "id": 18,
@@ -312,11 +314,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Việc tác tử có hành động giống hệt con người hay không."
       ],
       "correct": [
-        1,
-        4
+        0,
+        2
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: B, E."
+      "explanation": "Đáp án đúng là: A, C."
     },
     {
       "id": 20,
@@ -329,10 +331,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Là tập hợp các luật \"Điều kiện - Hành động\" trong bộ nhớ."
       ],
       "correct": [
-        1
+        2
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: B."
+      "explanation": "Đáp án đúng là: C."
     },
     {
       "id": 21,
@@ -345,10 +347,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Môi trường xung quanh để cung cấp các phản hồi về hiệu suất."
       ],
       "correct": [
-        1
+        0,
+        2
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: B."
+      "explanation": "Đáp án đúng là: A, C."
     },
     {
       "id": 22,
@@ -361,10 +364,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Học máy không cần đến các thuật toán tìm kiếm và lập luận. CHƯƠNG 2: TÁC TỬ"
       ],
       "correct": [
-        0
+        2
       ],
       "isMultiple": false,
-      "explanation": "Đáp án đúng là: A."
+      "explanation": "Đáp án đúng là: C."
     },
     {
       "id": 23,
@@ -377,10 +380,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Thiết kế các bộ phận cảm biến nhạy bén như năm giác quan của con người."
       ],
       "correct": [
+        0,
         2
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: C."
+      "explanation": "Đáp án đúng là: A, C."
     },
     {
       "id": 24,
@@ -393,11 +397,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Do sự thống trị của các hệ chuyên gia trong thương mại."
       ],
       "correct": [
-        3,
-        4
+        1
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: D, E."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: B."
     },
     {
       "id": 25,
@@ -410,10 +413,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Hệ thống Watson chiến thắng trong trò chơi Jeopardy!."
       ],
       "correct": [
-        0
+        1,
+        3
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: A."
+      "explanation": "Đáp án đúng là: B, D."
     },
     {
       "id": 26,
@@ -426,11 +430,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Nhận diện hình ảnh bàn cờ và áp dụng các luật phản xạ đơn giản."
       ],
       "correct": [
-        1,
-        4
+        3
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: B, E."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: D."
     },
     {
       "id": 27,
@@ -443,10 +446,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Mô phỏng thành công hoàn toàn cấu trúc bộ não người trong xử lý hình ảnh."
       ],
       "correct": [
-        2
+        0,
+        1
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: C."
+      "explanation": "Đáp án đúng là: A, B."
     },
     {
       "id": 28,
@@ -459,11 +463,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Nó được lập trình sẵn mọi câu trả lời có thể xảy ra trong cuộc thi."
       ],
       "correct": [
-        0,
-        1
+        2
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: A, B."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: C."
     },
     {
       "id": 29,
@@ -476,11 +479,10 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Các hệ thống mô phỏng cảm xúc con người."
       ],
       "correct": [
-        1,
-        4
+        3
       ],
-      "isMultiple": true,
-      "explanation": "Đáp án đúng là: B, E."
+      "isMultiple": false,
+      "explanation": "Đáp án đúng là: D."
     },
     {
       "id": 30,
@@ -493,10 +495,11 @@ if (typeof allQuizSets !== 'undefined' && Array.isArray(allQuizSets)) {
         "E. Sở hữu tri thức vô hạn về mọi lĩnh vực trong thực tế."
       ],
       "correct": [
-        3
+        0,
+        2
       ],
       "isMultiple": true,
-      "explanation": "Đáp án đúng là: D."
+      "explanation": "Đáp án đúng là: A, C."
     }
   ]
 });
