@@ -9,6 +9,92 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentIndex = 0;
   let userAnswers = [];
 
+  // Settings State & DOM Elements
+  let settings = {
+    shuffleQuestions: false,
+    shuffleOptions: false
+  };
+
+  const menuShuffleQuestions = document.getElementById('menu-shuffle-questions');
+  const menuShuffleOptions = document.getElementById('menu-shuffle-options');
+  const quizShuffleQuestions = document.getElementById('quiz-shuffle-questions');
+  const quizShuffleOptions = document.getElementById('quiz-shuffle-options');
+
+  // Load and save settings
+  function loadSettings() {
+    const saved = localStorage.getItem('quiz_settings');
+    if (saved) {
+      try {
+        settings = JSON.parse(saved);
+      } catch (e) {
+        console.error("Error loading settings:", e);
+      }
+    }
+    syncSettingsToDOM();
+  }
+
+  function saveSettings() {
+    localStorage.setItem('quiz_settings', JSON.stringify(settings));
+    syncSettingsToDOM();
+  }
+
+  function syncSettingsToDOM() {
+    if (menuShuffleQuestions) menuShuffleQuestions.checked = settings.shuffleQuestions;
+    if (menuShuffleOptions) menuShuffleOptions.checked = settings.shuffleOptions;
+    if (quizShuffleQuestions) quizShuffleQuestions.checked = settings.shuffleQuestions;
+    if (quizShuffleOptions) quizShuffleOptions.checked = settings.shuffleOptions;
+  }
+
+  function handleShuffleSettingChange(settingKey, isChecked) {
+    settings[settingKey] = isChecked;
+    saveSettings();
+
+    if (currentQuiz) {
+      const hasProgress = userAnswers.some(ans => ans.answered);
+      if (hasProgress) {
+        if (confirm('Thay đổi cài đặt xáo trộn sẽ khởi động lại bài thi từ đầu. Bạn có đồng ý?')) {
+          restartQuizWithCurrentSettings();
+        } else {
+          // Revert checkbox
+          settings[settingKey] = !isChecked;
+          saveSettings();
+        }
+      } else {
+        restartQuizWithCurrentSettings();
+      }
+    }
+  }
+
+  function restartQuizWithCurrentSettings() {
+    if (!currentQuiz) return;
+    const originalQuiz = allQuizSets.find(q => q.id === currentQuiz.id);
+    if (originalQuiz) {
+      localStorage.removeItem('quiz_shuffledQuestionIds');
+      localStorage.removeItem('quiz_shuffledOptionOrders');
+      localStorage.removeItem('quiz_userAnswers');
+      localStorage.removeItem('quiz_currentIndex');
+      startQuiz(originalQuiz);
+    }
+  }
+
+  if (menuShuffleQuestions) menuShuffleQuestions.addEventListener('change', (e) => handleShuffleSettingChange('shuffleQuestions', e.target.checked));
+  if (menuShuffleOptions) menuShuffleOptions.addEventListener('change', (e) => handleShuffleSettingChange('shuffleOptions', e.target.checked));
+  if (quizShuffleQuestions) quizShuffleQuestions.addEventListener('change', (e) => handleShuffleSettingChange('shuffleQuestions', e.target.checked));
+  if (quizShuffleOptions) quizShuffleOptions.addEventListener('change', (e) => handleShuffleSettingChange('shuffleOptions', e.target.checked));
+
+  // Initialize Settings
+  loadSettings();
+
+  // Fisher-Yates Shuffle Algorithm
+  function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
   // DOM Screens
   const menuScreen = document.getElementById('menu-screen');
   const quizScreen = document.getElementById('quiz-screen');
@@ -78,23 +164,120 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 2. Start Quiz Mode
   function startQuiz(quiz, loadedAnswers = null, loadedIndex = 0) {
-    currentQuiz = quiz;
+    // Clean and prepare questions: strip hardcoded prefixes
+    let preparedQuestions = quiz.questions.map(q => {
+      const cleanTitle = q.title.replace(/^Câu \d+:\s*/i, '');
+      const cleanOptions = q.options.map(opt => opt.replace(/^[A-Z]\.\s*/i, ''));
+      return {
+        ...q,
+        title: cleanTitle,
+        options: cleanOptions,
+        originalOptions: [...q.options],
+        originalCorrect: [...q.correct]
+      };
+    });
+
+    let finalQuestions = [];
+    let savedShuffledQuestionIds = null;
+    let savedShuffledOptionOrders = null;
+
+    if (loadedAnswers) {
+      try {
+        const qIdsStr = localStorage.getItem('quiz_shuffledQuestionIds');
+        if (qIdsStr) savedShuffledQuestionIds = JSON.parse(qIdsStr);
+        const optOrdersStr = localStorage.getItem('quiz_shuffledOptionOrders');
+        if (optOrdersStr) savedShuffledOptionOrders = JSON.parse(optOrdersStr);
+      } catch (e) {
+        console.error("Error reading saved shuffle structure:", e);
+      }
+    }
+
+    // Reconstruct question order
+    if (savedShuffledQuestionIds) {
+      savedShuffledQuestionIds.forEach(id => {
+        const found = preparedQuestions.find(q => q.id === id);
+        if (found) {
+          finalQuestions.push(found);
+        }
+      });
+      if (finalQuestions.length !== preparedQuestions.length) {
+        finalQuestions = preparedQuestions;
+      }
+    } else {
+      if (settings.shuffleQuestions) {
+        finalQuestions = shuffleArray(preparedQuestions);
+      } else {
+        finalQuestions = preparedQuestions;
+      }
+    }
+
+    // Reconstruct option order for each question
+    finalQuestions = finalQuestions.map(q => {
+      let finalOptions = [];
+      let finalCorrect = [];
+      let savedOptOrder = null;
+
+      if (savedShuffledOptionOrders && savedShuffledOptionOrders[q.id]) {
+        savedOptOrder = savedShuffledOptionOrders[q.id];
+      }
+
+      if (savedOptOrder) {
+        finalOptions = savedOptOrder.map(origIdx => q.options[origIdx]);
+        q.shuffledOptionOrder = savedOptOrder;
+        q.originalCorrect.forEach(origIdx => {
+          const newIdx = savedOptOrder.indexOf(origIdx);
+          if (newIdx !== -1) {
+            finalCorrect.push(newIdx);
+          }
+        });
+      } else {
+        if (settings.shuffleOptions) {
+          const mapped = q.options.map((optText, idx) => ({ text: optText, origIdx: idx }));
+          const shuffledMapped = shuffleArray(mapped);
+          
+          finalOptions = shuffledMapped.map(item => item.text);
+          q.shuffledOptionOrder = shuffledMapped.map(item => item.origIdx);
+          q.originalCorrect.forEach(origIdx => {
+            const newIdx = shuffledMapped.findIndex(item => item.origIdx === origIdx);
+            if (newIdx !== -1) {
+              finalCorrect.push(newIdx);
+            }
+          });
+        } else {
+          finalOptions = [...q.options];
+          finalCorrect = [...q.originalCorrect];
+          q.shuffledOptionOrder = q.options.map((_, idx) => idx);
+        }
+      }
+
+      return {
+        ...q,
+        options: finalOptions,
+        correct: finalCorrect
+      };
+    });
+
+    currentQuiz = {
+      ...quiz,
+      questions: finalQuestions
+    };
+
     currentIndex = loadedIndex;
     
     // Reset or load user answers state for this quiz
     if (loadedAnswers) {
       userAnswers = loadedAnswers;
     } else {
-      userAnswers = Array.from({ length: quiz.questions.length }, () => ({
+      userAnswers = Array.from({ length: currentQuiz.questions.length }, () => ({
         answered: false,
         selected: [],
         isCorrect: false
       }));
     }
 
-    activeQuizTitle.textContent = quiz.title;
-    activeQuizDesc.textContent = quiz.description;
-    navTotalCount.textContent = `${quiz.questions.length} câu`;
+    activeQuizTitle.textContent = currentQuiz.title;
+    activeQuizDesc.textContent = currentQuiz.description;
+    navTotalCount.textContent = `${currentQuiz.questions.length} câu`;
 
     // Switch Screens
     menuScreen.classList.add('hidden');
@@ -163,8 +346,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const state = userAnswers[index];
     const total = currentQuiz.questions.length;
 
-    qNumberBadgeEl.textContent = `Câu ${q.id}`;
-    qTitleEl.textContent = q.title;
+    qNumberBadgeEl.textContent = `Câu ${index + 1}`;
+    qTitleEl.textContent = `Câu ${index + 1}: ${q.title}`;
     footerCounterEl.textContent = `${index + 1} / ${total}`;
 
     if (q.isMultiple) {
@@ -187,7 +370,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (state.answered) {
-      explanationTextEl.textContent = q.explanation;
+      // Find correct option texts
+      const correctTexts = q.correct.map(idx => {
+        const prefix = String.fromCharCode(65 + idx) + '. ';
+        return prefix + q.options[idx];
+      });
+
+      explanationTextEl.innerHTML = `
+        <div class="actual-correct-answer" style="color: var(--success); font-weight: 700; margin-bottom: 8px;">
+          <span>🎯 Đáp án đúng thực tế: </span>${correctTexts.join(', ')}
+        </div>
+        <hr class="exp-divider" style="margin: 12px 0; border: 0; border-top: 1px solid var(--card-border);" />
+        <div>${q.explanation}</div>
+      `;
       explanationBoxEl.classList.remove('hidden');
     } else {
       explanationBoxEl.classList.add('hidden');
@@ -248,7 +443,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const label = document.createElement('label');
       label.className = 'option-text';
-      label.textContent = optText;
+      // Prepend dynamic letter prefix
+      const prefix = String.fromCharCode(65 + optIdx) + '. ';
+      label.textContent = prefix + optText;
 
       optionItem.prepend(input);
       optionItem.insertBefore(label, optionItem.querySelector('.option-status-icon') || null);
@@ -374,15 +571,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // 12. Reset Event
   resetBtn.addEventListener('click', () => {
     if (confirm('Bạn có chắc chắn muốn làm lại bài trắc nghiệm này từ đầu?')) {
-      userAnswers = Array.from({ length: currentQuiz.questions.length }, () => ({
-        answered: false,
-        selected: [],
-        isCorrect: false
-      }));
-      currentIndex = 0;
-      loadQuestion(currentIndex);
-      updateStats();
-      saveStateToLocalStorage();
+      localStorage.removeItem('quiz_shuffledQuestionIds');
+      localStorage.removeItem('quiz_shuffledOptionOrders');
+      localStorage.removeItem('quiz_userAnswers');
+      localStorage.removeItem('quiz_currentIndex');
+
+      const originalQuiz = allQuizSets.find(q => q.id === currentQuiz.id);
+      if (originalQuiz) {
+        startQuiz(originalQuiz);
+      }
     }
   });
 
@@ -420,6 +617,16 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('quiz_currentQuizId', currentQuiz.id);
       localStorage.setItem('quiz_currentIndex', currentIndex);
       localStorage.setItem('quiz_userAnswers', JSON.stringify(userAnswers));
+
+      // Save shuffle configurations
+      const questionIds = currentQuiz.questions.map(q => q.id);
+      localStorage.setItem('quiz_shuffledQuestionIds', JSON.stringify(questionIds));
+
+      const optionOrders = {};
+      currentQuiz.questions.forEach(q => {
+        optionOrders[q.id] = q.shuffledOptionOrder;
+      });
+      localStorage.setItem('quiz_shuffledOptionOrders', JSON.stringify(optionOrders));
     }
   }
 
@@ -427,6 +634,8 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.removeItem('quiz_currentQuizId');
     localStorage.removeItem('quiz_currentIndex');
     localStorage.removeItem('quiz_userAnswers');
+    localStorage.removeItem('quiz_shuffledQuestionIds');
+    localStorage.removeItem('quiz_shuffledOptionOrders');
   }
 
   // Restore quiz from LocalStorage if exists on init
