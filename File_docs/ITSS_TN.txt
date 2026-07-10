@@ -1,0 +1,539 @@
+Dưới đây là danh sách các câu hỏi trắc nghiệm đã được giữ nguyên định dạng xuống dòng giữa các đáp án, bôi đậm và thêm dấu tick (✓) vào cuối câu đáp án đúng theo yêu cầu của bạn:
+Câu 1: Hoàn chỉnh câu sau: ......... là cách biểu diễn tốt để mô tả hành vi của một số đối tượng. Nó rất tốt để mô tả hành vi liên quan đến một số đối tượng hợp tác với nhau không cần biểu diễn rõ trình tự thời gian.
+a) Sơ đồ trạng thái (State Diagrams)
+b) Sơ đồ tuần tự (Sequence Diagrams)
+c) Sơ đồ cộng tác (Collaboration Diagrams) ✓
+d) Sơ đồ hoạt động (Activity Diagrams)
+Câu 2: Hoàn chỉnh câu sau: ......... là cách biểu diễn tốt để mô tả luồng hoạt động trong một Use Case và thường được dùng trong mô hình nghiệp vụ.
+a) Sơ đồ trạng thái (State Diagrams)
+b) Sơ đồ tương tác (Interaction Diagrams)
+c) Sơ đồ hoạt động (Activity Diagrams) ✓
+d) Sơ đồ lớp (Class Diagrams)
+Câu 3: Sơ đồ hoạt động được sử dụng trong những tình huống sau:
+a) Phân tích một use case
+b) Mô tả thuật toán tuần tự phức tạp, xây dựng lưu đồ
+c) Liên quan đến các ứng dụng đa luồng
+d) Tất cả các câu trên đều đúng ✓
+Câu 4: Sơ đồ hoạt động được sử dụng trong những tình huống sau:
+a) Biểu diễn các đối tượng cộng tác với nhau như thế nào.
+b) Biểu diễn các hành vi của đối tượng qua thời gian sống của chúng.
+c) Biểu diễn điều kiện logic phức tạp ✓
+d) Tất cả các câu trên đều sai
+Câu 5: Để biểu diễn các quan hệ vật lý giữa phần mềm và các thành phần phần cứng trong một hệ thống bạn sẽ dụng sơ đồ nào của UML?
+a) Sơ đồ triển khai (Deployment Diagram) ✓
+b) Sơ đồ hoạt động (Activity Diagram)
+c) Sơ đồ lớp (Class Diagram)
+d) Sơ đồ trạng thái (State Diagram)
+Câu 6: Mục đích của sơ đồ hoạt động là:
+a) Biểu diễn hành vi với cấu trúc điều khiển. Sơ đồ hoạt động có thể biểu diễn nhiều đối tượng trong một use case. ✓
+b) Biểu diễn cấu trúc tĩnh của các khái niệm, các loại và các lớp
+c) Giúp nắm được mục đích cơ bản của lớp, tốt cho việc khám phá việc cài đặt use case như thế nào.
+d) Biểu diễn cách bố trí các thành phần trên các nút phần cứng
+Câu 7: Mục đích của sơ đồ lớp là:
+a) Biểu diễn hành vi với cấu trúc điều khiển. Sơ đồ hoạt động có thể biểu diễn nhiều đối tượng trong một use case.
+b) Biểu diễn cấu trúc tĩnh của các khái niệm, các loại và các lớp ✓
+c) Giúp nắm được mục đích cơ bản của lớp, tốt cho việc khám phá việc cài đặt use case như thế nào.
+d) Biểu diễn cách bố trí các thành phần trên các nút phần cứng
+Câu 8: Mục đích của sơ đồ triển khai là:
+a) Biểu diễn hành vi với cấu trúc điều khiển. Sơ đồ hoạt động có thể biểu diễn nhiều đối tượng trong một use case.
+b) Biểu diễn cấu trúc tĩnh của các khái niệm, các loại và các lớp
+c) Giúp nắm được mục đích cơ bản của lớp, tốt cho việc khám phá việc cài đặt use case như thế nào.
+d) Biểu diễn cách bố trí các thành phần trên các nút phần cứng ✓
+Câu 9: Mục đích của sơ đồ tương tác (Interaction Diagram) là:
+a) Cung cấp định nghĩa chặt chẽ mục đích các hành vi và trạng thái hợp lệ của lớp.
+b) Biểu diễn các đối tượng cộng tác trong một use case như thế nào. ✓
+c) Biểu diễn nhóm các lớp và các hoạt động giữa chúng
+d) Cung cấp một vài kỹ thuật hữu ích cho phân tích, thiết kế và viết mã.
+Câu 10: Mục đích của sơ đồ gói (Package Diagram) là:
+a) Cung cấp định nghĩa chặt chẽ mục đích các hành vi và trạng thái hợp lệ của lớp.
+b) Biểu diễn các đối tượng cộng tác trong một use case như thế nào.
+c) Biểu diễn cho nhóm các lớp và các phụ thuộc giữa chúng ✓
+d) Cung cấp một vài kỹ thuật hữu ích cho phân tích, thiết kế và viết mã.
+Câu 11: Mục đích của sơ đồ trạng thái (State Diagram) là:
+a) Biểu diễn một đối tượng thay đổi trạng thái qua nhiều use cases. ✓
+b) Biểu diễn nhiều đối tượng thay đổi trạng thái qua nhiều use cases.
+c) Biểu diễn cấu trúc tĩnh của các khái niệm, các loại và các lớp
+d) Giúp cung cấp mục đích chính yếu của lớp
+Câu 12: Mục đích của Use Case là:
+a) Chỉ ra những yêu cầu từ phía người dùng.
+b) Cung cấp một vài kỹ thuật hữu ích cho phân tích, thiết kế và viết mã.
+c) Là nền tảng cho việc kiểm tra hệ thống
+d) Câu a và c đúng ✓
+Câu 13: Trong giai đoạn xây dựng (Construction phase), mỗi lần lặp sẽ bao gồm:
+a) Analysis, design, coding, testing, integration ✓
+b) Design, coding, testing, integration
+c) Analysis, design, coding, testing
+d) Design, coding
+Câu 18: Phát biểu nào đúng về sơ đồ hoạt động?
+a) Có thể có một phân nhánh có một hoạt động đến và nhiều hoạt động đi theo điều kiện.
+b) Có thể có một sự hợp nhất đồng bộ của các luồng đồng thời.
+c) Cả 2 câu trên đều đúng ✓
+d) Cả 2 câu trên đều sai
+Câu 19: Phát biểu nào đúng về sơ đồ thành phần (Component Diagrams)?
+a) Một thành phần có thể có nhiều hơn một giao diện, nó Biểu diễn cho một đơn vị (module) vật lý của mã lệnh ✓
+b) Một thành phần không thể có nhiều hơn một giao diện.
+c) Một thành phần trình bày vài loại của đơn vị phần cứng
+d) Câu a và c đúng
+Câu 20: Các khái niệm về phạm vi hệ thống được tìm thấy trong:
+a) Use Cases ✓
+b) Sơ đồ Use Cases
+c) Sơ đồ tương tác (Interaction Diagrams)
+d) Sơ đồ tuần tự (Sequence Diagrams)
+Câu 25: Việc đo "độ mạnh" của sự kết nối giữa hai thành phần hệ thống được biết như là:
+e. Coupling (liên kết) ✓
+f. Cohesion (kết dính)
+g. Aggregation (kết tập)
+h. Bonding (sự liên kết)
+Câu 26: Biểu đồ nào sau đây không phải là biểu đồ của UML:
+A. Component diagram
+B. State-chart diagram
+C. Deployment diagram
+D. Relationship diagram ✓
+Câu 27: Ký hiệu trong hình biểu diễn cho quan hệ:
+i. Mở rộng (extend)
+j. Bao gồm (include)
+k. Kết hợp (association) ✓
+l. Tổng quát hóa (generalization)
+Câu 31: Sơ đồ nào sau đây Không phải là sơ đồ của UML:
+a. Component diagram
+b. State-chart diagram
+c. Deployment diagram
+d. Relationship diagram ✓
+Câu 32: Thành phần nào sau đây không là đặc tính của một đối tượng:
+a. Identity
+b. Behaviour
+c. Action ✓
+d. State
+Câu 33: Sự đóng gói được hiểu là:
+a. Sự che dấu thông tin ✓
+b. Sự tổ chức các thành phần của một sơ đồ vào trong một gói (package)
+c. Việc xây dựng một lớp cha dựa trên các thuộc tính và các hành vi chung của các lớp con
+d. Việc xây dựng giao diện gồm tập các hành vi mà ta muốn sử dụng lại nhiều lần trên mô hình.
+Câu 34: Một lớp được mô tả là tập các đối tượng chia xẻ cùng các:
+a. Attributes (thuộc tính), behaviour (hành vi) and operations (hành động)
+b. Identity(đặc tính), behaviour and state (trạng thái)
+c. Attributes, operations and relationships (mối quan hệ) ✓
+d. Relationships, operations and multiplicity (bản số)
+Câu 37: Câu phát biểu nào sau đây đúng:
+a. Một lớp là sự đóng gói của một đối tượng
+b. Một lớp biểu diễn sự phân cấp của một đối tượng
+c. Một lớp là một thể hiện của một đối tượng
+d. Một lớp là một định nghĩa trừu tượng của một đối tượng ✓
+Câu 38: Tính đa hình có thể được mô tả như là:
+a. Che dấu nhiều cài đặt khác nhau dựa trên cùng một giao diện. ✓
+b. Các thuộc tính và phương thức khác nhau của các lớp con có cùng lớp cha.
+c. Các lớp kết hợp (association class) với ràng buộc {or}
+d. Sự tổng quát hoá (Generalization) các lớp con thừa kế
+Câu 39: Cụm từ tốt nhất để biểu diễn mối quan hệ tổng quát hoá là:
+a. “Is a part of”
+b. “Is a kind of” ✓
+c. “Is a replica of”
+d. “Is composed of”
+Câu 40: Một lớp con thừa kế từ lớp cha các:
+a. Attributes, links
+b. Attributes, operations
+c. Attributes, operations, relationships ✓
+d. Relationships, operations, links
+Câu 41: Để tổ chức các phần tử (elements) vào bên trong các nhóm (groups) ta sử dụng:
+a. Package ✓
+b. Class
+c. Class và interface
+d. Component
+Câu 46: Stereotype package có thể biểu diễn cho:
+a. Một giao diện
+b. Một sơ đồ trạng thái
+c. Một tầng kiến trúc ✓
+d. Một sơ đồ use-case
+Câu 47: Đường sinh tồn (lifeline) của 1 đối tượng được trình bày trong sơ đồ:
+a. Sơ đồ đối tượng
+b. Sơ đồ trạng thái
+c. Sơ đồ tuần tự ✓
+d. Sơ đồ triển khai
+Câu 48: Phát biểu nào sau đây không đúng?
+a. Sự mô tả của các use-cases đủ để tìm và phân tích các lớp cùng các đối tượng của nó. ✓
+b. Có ít nhất một boundary object cho mỗi actor hay use-case pair
+c. Có một lớp điều khiển (control class) ứng với mỗi use-case
+d. Các đối tượng thực thể được nhận diện bởi việc xem xét các danh từ và cụm danh từ trong use- cases
+Câu 49: Phát biểu nào sau đây đúng?
+a. Không có sự hạn chế nào trên nhiều mối kết hợp (multiple associations) giữa cùng 2 lớp. hoặc Component
+b. Có thể có nhiều mối kết hợp giữa cùng 2 lớp, nhưng chúng phải mang các ý nghĩa khác nhau. ✓
+c. Không cho phép biểu diễn nhiều mối kết hợp trên cùng 2 lớp.
+d. Các mối kết hợp giữa cùng 2 lớp phải được tập hợp lại thành 1 mối kết hợp
+Câu 51: Phát biểu nào sau đây không đúng:
+a. Chỉ những public classes mới có thể được truy xuất từ những phần bên ngoài của package.chứa nó. ✓
+b. Không tồn tại lớp của các hệ thống con (classes of a subsystem)
+c. Các gói (Packages) ở tầng (layer) thấp hơn có thể phụ thuộc vào các gói ở tầng cao hơn.
+d. Giai đoạn thiết kế là sự tinh chế của giai đoạn phân tích. Nó thêm vào những chi tiết cụ thể được nhận thức trong giai đoạn thiết kế.
+Câu 52: Nếu ta muốn tổ chức các phần tử vào trong các nhóm được sử dụng lại với sự che dấu thông tin đầy đủ, ta có thể sử dụng một trong các cấu trúc nào của UML?
+a. Package
+b. Class
+c. Class và interface
+d. Subsystem hoặc Component ✓
+Câu 53: Trong giai đoạn nào của quy trình phát triển phần mềm, ta xác định chi phí và thời gian của dự án, xác định các rủi ro và môi trường hệ thống:
+a) Khởi tạo (Inception) ✓
+b) Tinh chế (Elaboration)
+c) Xây dựng (construction)
+d) Chuyển giao (transition)
+Câu 54: Trong giai đoạn nào của quy trình phát triển phần mềm, ta đánh giá độ rủi ro, các thành phần sử dụng:
+a) Khởi tạo (Inception)
+b) Tinh chế (Elaboration) ✓
+c) Xây dựng (construction)
+d) Chuyển giao (transition)
+Câu 55: Trong giai đoạn nào của quy trình phát triển phần mềm, ta xây dựng hệ thống qua quá trình gồm nhiều vòng lặp theo quy trình xoắn ốc, mỗi vòng lặp là một dự án nhỏ...
+a) Khởi tạo (Inception)
+b) Tinh chế (Elaboration)
+c) Xây dựng (construction) ✓
+d) Chuyển giao (transition)
+Câu 56: Trong giai đoạn nào của quy trình phát triển phần mềm, ta thực hiện cài đặt hệ thống, thử nghiệm sản phẩm đã triển khai, thu thập các phản hồi từ phía người dùng, bảo trì hệ thống:
+a) Khởi tạo (Inception)
+b) Tinh chế (Elaboration)
+c) Xây dựng (construction)
+d) Chuyển giao (transition) ✓
+Câu 57: Một ............. là dãy các bước mô tả sự tương tác giữa người dùng và hệ thống:
+a) Kịch bản ✓
+b) Use case
+c) Mục tiêu
+d) Sự kiện
+Câu 58: Sơ đồ nào mô tả các kiểu của các đối tượng và các mối quan hệ tĩnh khác nhau giữa chúng?
+a) Sơ đồ lớp ✓
+b) Sơ đồ tương tác
+c) Sơ đồ trạng thái
+d) Sơ đồ hoạt động
+Câu 59: Phát biểu nào sau đây không đúng về mối kết hợp trong sơ đồ lớp:
+a) Mối kết hợp biểu diễn các quan hệ giữa các thể hiện của các lớp
+b) Mối kết hợp là các quy trình mà một lớp sẽ thực hiện ✓
+c) Mối kết hợp có thể vô hướng
+d) Mối kết hợp có thể có cả hai hướng
+Câu 60: Trong sơ đồ tuần tự ---------> biểu diễn:
+a) Thông điệp (message) ✓
+b) Điều kiện (condition)
+c) Lặp (iteration)
+d) Xóa đối tượng (deletion)
+Câu 61: Trong sơ đồ tuần tự [some_text] biểu diễn:
+a) Thông điệp (message)
+b) Điều kiện (condition) ✓
+c) Lặp (iteration)
+d) Xóa đối tượng (deletion)
+Câu 62: Trong sơ đồ tổ chức dấu * biểu diễn: ... vào một thành phần thuộc về duy nhất một tổng thể. Các thành phần này luôn luôn tồn tại và mất đi cùng với tổng thể?
+a) aggregation
+b) Composition ✓
+c) Classification
+d) Generalization
+Câu 67: Phát biểu nào sau đây đúng về mối kết hợp định tính (Qualified Associations) trên sơ đồ lớp?
+a) Mối kết hợp định tính cung cấp chức năng tương tự như chỉ mục.
+b) Đặc tính thông tin định danh (qualifier) là một thuộc tính của một lớp. Biểu tượng của nó là hình chữ nhật nhỏ kế bên class mà thực hiện việc tìm kiếm
+c) Mối kết hợp định tính đơn giản hóa sự định hướng qua mối kết hợp phức tạp bằng cách cung cấp các khóa để thu hẹp việc lựa chọn các đối tượng kết hợp.
+d) Các câu trên đều đúng ✓
+Câu 68: Phát biểu nào sau đây đúng về mối kết hợp định tính (Qualified Associations) trên sơ đồ lớp?
+a) Mối kết hợp định tính xác định số lượng các đối tượng có thể tham gia trong mối kết hợp tính chất khác của mối kết hợp. ✓
+b) Một lớp kết hợp đóng gói thông tin về mối kết hợp
+c) Một lớp kết hợp được nối đến mối kết hợp bằng đường đứt nét. (dashed line)
+d) Tất cả các câu trên đều đúng
+Câu 70: Phát biểu nào sau đây đúng về lớp kết hợp trên sơ đồ lớp?
+a) Một lớp kết hợp được nối đến mối kết hợp bằng đường liền nét. (solid line) ✓
+b) Một lớp kết hợp được nối đến mối kết hợp bằng đường chấm. (dotted line)
+c) Một lớp kết hợp chứa các luật bắt buộc phải đảm bảo các ràng buộc của mối quan hệ.
+d) Không có phát biểu nào đúng
+Câu 71: Phát biểu nào sau đây đúng về sơ đồ trạng thái?
+a) Sơ đồ trạng thái mô tả tất cả các trạng thái mà một đối tượng có thể có và sự chuyển dịch của các trạng thái như là kết quả của các sự kiện. ✓
+b) Sơ đồ trạng thái mô tả hành vi của nhiều đối tượng trong cùng một Use Case.
+c) Sơ đồ trạng thái mô tả các loại đối tượng trong hệ thống và các loại mối quan hệ khác nhau giữa chúng.
+d) Sơ đồ trạng thái thể hiện nhiều thành phần trong hệ thống và các phụ thuộc của chúng.
+Câu 72: Hoàn chỉnh câu sau về thông tin (artifact) trong sơ đồ trạng thái: Một ......... liên quan đến một sự chuyển dịch và được xem như một tiến trình xuất hiện nhanh và không bị ngắt bởi một số sự kiện.
+a) Hành động (Action) ✓
+b) Hoạt động (Activity)
+c) Điều kiện che chắn (Guard)
+d) Sự kiện (Event)
+Câu 73: Hoàn chỉnh câu sau về thông tin (artifact) trong sơ đồ trạng thái: Một ......... liên quan với một trạng thái và có thể diễn ra trong thời gian dài. Nó có thể bị ngắt bởi một số sự kiện.
+a) Hành động (Action)
+b) Hoạt động (Activity) ✓
+c) Điều kiện che chắn (Guard)
+d) Sự kiện (Event)
+Câu 75: Mệnh đề nào sau đây đúng về sơ đồ trạng thái?
+a) Sơ đồ trạng thái là cách biểu diễn tốt hành vi của một đối tượng qua nhiều Use Cases. ✓
+b) Sơ đồ trạng thái là cách biểu diễn tốt hành vi của nhiều đối tượng qua nhiều Use Cases.
+c) Sơ đồ trạng thái là cách biểu diễn tốt hành vi của nhiều đối tượng trong một Use Cases.
+d) Sơ đồ trạng thái là cách biểu diễn tốt dãy các hành động cho nhiều đối tượng và Use Cases.
+Câu 76: Hoàn chỉnh câu sau: ......... là cách biểu diễn tốt để mô tả hành vi của một đối tượng qua nhiều Use Cases. Nó rất tốt để mô tả hành vi liên quan đến một số đối tượng hợp tác với nhau.
+e) Sơ đồ trạng thái (State Diagrams) ✓
+f) Sơ đồ tuần tự (Sequence Diagrams)
+g) Sơ đồ hợp tác (Collaboration Diagrams)
+h) Sơ đồ hoạt động (Activity Diagrams)
+Câu 77: Hoàn chỉnh câu sau: ......... là cách biểu diễn tốt để mô tả hành vi của nhiều đối tượng trong một Use Case
+e) Sơ đồ trạng thái (State Diagrams)
+f) Sơ đồ tương tác (Interaction Diagrams) ✓
+g) Sơ đồ hoạt động (Activity Diagrams)
+h) Sơ đồ lớp (Class Diagrams)
+Câu 78: Hoàn chỉnh câu sau: ......... là cách biểu diễn tốt để thể hiện dãy các hành động cho nhiều đối tượng và Use Case
+a) Sơ đồ trạng thái (State Diagrams)
+b) Sơ đồ tuần tự (Sequence Diagrams)
+c) Sơ đồ hợp tác (Collaboration Diagrams)
+d) Sơ đồ hoạt động (Activity Diagrams) ✓
+Câu 79: Ký hiệu * trong UML biểu diễn:
+a) Biểu diễn các bước lặp lại mà không có cấu trúc vòng lặp
+b) Nó chỉ ra rằng các hoạt động được thực hiện nhiều lần
+c) Biểu diễn nhiều hoạt động cần cùng được thực hiện trong một vài trạng thái.
+d) Câu a và b đúng ✓
+Câu 86: Mục đích của kỹ thuật thiết kế bằng hợp đồng "Design by Contract" là:
+a) Cung cấp định nghĩa chặt chẽ mục đích các hành vi và trạng thái hợp lệ của lớp. ✓
+b) Biểu diễn các đối tượng cộng tác trong một use case như thế nào.
+c) Biểu diễn nhóm các lớp và các phụ thuộc giữa chúng
+d) Cung cấp một vài kỹ thuật hữu ích cho phân tích, thiết kế và viết mã.
+Câu 92: Hoàn chỉnh các mệnh đề sau về mối quan hệ giữa các Use Cases: Sử dụng ......... khi chúng ta muốn giảm các bước trùng lặp giữa các use case, lấy những bước chung đó để tạo nên use case phụ.
+e) Include ✓
+f) Generalization
+g) Extend
+h) Delegation
+Câu 93: Hoàn chỉnh các mệnh đề sau về mối quan hệ giữa các Use Cases: Sử dụng ......... khi chúng ta muốn tạo một use case mới bằng cách thêm một số bước vào một use case có sẵn.
+e) Include
+f) Generalization
+g) Extend ✓
+h) Delegation
+Câu 94: Phát biểu nào sau đây đúng về use cases?
+a) Use Cases biểu diễn một cách nhìn bên ngoài (external view) của hệ thống
+b) Có sự tương quan giữa Use Cases và lớp bên trong hệ thống
+c) Không có sự tương quan giữa Use Cases và lớp bên trong hệ thống
+d) Câu a và c đúng ✓
+Câu 95: Phát biểu nào sau đây đúng về Sơ đồ tuần tự?
+e) Mỗi thông điệp được biểu diễn bằng một mũi tên giữa đường sống của hai đối tượng. ✓
+f) Mỗi thông điệp được biểu diễn bằng một đường thẳng đứng đứt nét
+g) Mỗi thông điệp phải có nhãn với tên thông điệp đi kèm một con số
+h) Câu a và c đúng
+Câu 96: Sơ đồ nào biểu diễn các thể hiện trong một hệ thống tại một thời điểm?
+e) Sơ đồ đối tượng (Object Diagram) ✓
+f) Sơ đồ lớp (Class Diagram)
+g) Sơ đồ thành phần (Component Diagram)
+h) Sơ đồ hệ thống (System Diagram)
+Câu 97: Phát biểu nào đúng về sơ đồ hoạt động?
+e) Một phân nhánh có một hoạt động đến và nhiều hoạt động đi theo điều kiện.
+f) Một sự hợp nhất đồng bộ của các luồng đồng thời.
+g) Cả 2 câu trên đều đúng ✓
+h) Cả 2 câu trên đều sai
+Câu 98: Phát biểu nào đúng về sơ đồ thành phần (Component Diagrams)?
+e) Một thành phần có thể có nhiều hơn một giao diện, nó trình bày cho một đơn vị (module) vật lý của mã lệnh ✓
+f) Một thành phần không thể có nhiều hơn một giao diện.
+g) Một thành phần trình bày vài loại của đơn vị phần cứng
+h) Câu a và c đúng
+Câu 99: Phát biểu nào đúng về Use Cases?
+a) Những yêu cầu là những ghi nhận trước tiên trong Use Cases
+b) Công việc của một lần lặp được xác định bởi việc chọn lựa một số kịch bản Use Cases hay toàn bộ Use Cases.
+c) Công việc của một lần lặp được xác định bởi việc chọn lựa một số đặc trưng từ danh sách các đặc trưng hơn là việc chọn lựa một số kịch bản Use Cases hay toàn bộ Use Cases.
+d) Câu a và b đúng ✓
+Câu 100: Kết quả của giai đoạn tinh chế (Elaboration phase) là:
+a) Các yêu cầu chức năng (Use Cases)
+b) Nền tảng cho việc đánh giá chi phí đến cuối dự án.
+c) Các yêu cầu phi chức năng trong bảng chi tiết bổ sung.
+d) Tất cả các câu trên ✓
+Câu 101: Các khái niệm về phạm vi hệ thống được tìm thấy trong:
+e) Use Cases ✓
+f) Sơ đồ Use Cases
+g) Sơ đồ tương tác (Interaction Diagrams)
+h) Sơ đồ tuần tự (Sequence Diagrams)
+Câu 102: Sơ đồ nào là thông tin (artifact) hữu ích nhất trong việc phân tích để tìm ra các hành vi của phần mềm được xem như là hộp đen?
+a) Sơ đồ tuần tự hệ thống (System Sequence Diagram) ✓
+b) Sơ đồ lớp quan niệm (Conceptual Class Diagram)
+c) Sơ đồ triển khai (Deployment Diagram)
+d) Sơ đồ thành phần (Component Diagram)
+
+
+
+Giải thích : 
+Câu 1: Sơ đồ cộng tác (Collaboration Diagrams)
+Giải thích: Sơ đồ cộng tác (UML 2.0 gọi là Communication Diagram) tập trung vào cấu trúc tổ chức và mối quan hệ hợp tác giữa các đối tượng để thực hiện một kịch bản mà không đặt nặng trình tự thời gian (khác với sơ đồ tuần tự).
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc (Mục 3.3: Phân phối hành vi của trường hợp sử dụng vào các lớp học).
+Câu 2: Sơ đồ hoạt động (Activity Diagrams)
+Giải thích: Sơ đồ hoạt động biểu diễn luồng công việc (workflow) tuần tự hoặc song song, cực kỳ phù hợp để mô tả các bước nghiệp vụ hoặc luồng xử lý bên trong một Use Case.
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Phần giới thiệu công cụ mô tả kịch bản Use Case).
+Câu 3: Tất cả các câu trên đều đúng
+Giải thích: Sơ đồ hoạt động vừa phân tích được luồng sự kiện Use Case (a), vừa dùng như lưu đồ thuật toán cho các logic phức tạp (b), lại vừa hỗ trợ chia nhánh/gộp luồng song song (Fork/Join) rất tốt cho ứng dụng đa luồng (c).
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Phần chi tiết về Sơ đồ hoạt động).
+Câu 4: Biểu diễn điều kiện logic phức tạp
+Giải thích: Sơ đồ hoạt động sử dụng các nút quyết định (Decision/Merge) cùng điều kiện bảo vệ (Guard Condition) để làm rõ các rẽ nhánh logic phức tạp. Câu (a) là sơ đồ tương tác, (b) là sơ đồ trạng thái.
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Phần cấu trúc rẽ nhánh điều kiện).
+Câu 5: Sơ đồ triển khai (Deployment Diagram)
+Giải thích: Sơ đồ triển khai dùng để ánh xạ các thành phần phần mềm (artifact/component) lên các nút phần cứng vật lý (node) và cấu hình mạng của hệ thống.
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Slide 2: Tổng quan 5 góc nhìn kiến trúc – Deployment View).
+Câu 6: Biểu diễn hành vi với cấu trúc điều khiển...
+Giải thích: Sơ đồ hoạt động tập trung vào khía cạnh hành vi/động của hệ thống, chứa các cấu trúc điều khiển luồng (vòng lặp, rẽ nhánh) và có thể bao quát hoạt động của nhiều đối tượng cùng tham gia Use Case qua các phân làn (Swimlane).
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case.
+Câu 7: Biểu diễn cấu trúc tĩnh của các khái niệm, các loại và các lớp
+Giải thích: Sơ đồ lớp (Class Diagram) là sơ đồ quan trọng nhất biểu diễn góc nhìn cấu trúc tĩnh của hệ thống, bao gồm các lớp, thuộc tính, phương thức và mối quan hệ giữa chúng.
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc và Bài 6: Thiết kế lớp.
+Câu 8: Biểu diễn cách bố trí các thành phần trên các nút phần cứng
+Giải thích: Đây chính là mục đích cốt lõi của sơ đồ triển khai (Deployment Diagram), giúp kỹ sư hệ thống nắm được cấu hình cài đặt vật lý.
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Mục tổng quan cấu trúc hệ thống).
+Câu 9: Biểu diễn các đối tượng cộng tác trong một use case như thế nào.
+Giải thích: Sơ đồ tương tác (Interaction Diagram – bao gồm Sequence và Collaboration diagram) có mục đích chính là hiện thực hóa Use Case bằng cách chỉ ra các đối tượng trao đổi thông điệp với nhau như thế nào.
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc (Mục 3.3: Phân phối hành vi trường hợp sử dụng).
+Câu 10: Biểu diễn cho nhóm các lớp và các phụ thuộc giữa chúng
+Giải thích: Sơ đồ gói (Package Diagram) là một sơ đồ cấu trúc tĩnh, dùng để tổ chức, gom nhóm các phần tử mô hình (như các lớp) thành các module và chỉ ra sự phụ thuộc (dependency) giữa các module đó.
+Vị trí trong slide: Bài 4: Xác định các phần tử thiết kế (Phần quản lý gói phụ thuộc và tính đóng gói Package).
+Câu 11: Biểu diễn một đối tượng thay đổi trạng thái qua nhiều use cases.
+Giải thích: Sơ đồ trạng thái (State Diagram) tập trung vào việc mô tả vòng đời của một đối tượng duy nhất sở hữu hành vi phức tạp, chuyển đổi qua các trạng thái do tác động của sự kiện từ nhiều Use Case khác nhau.
+Vị trí trong slide: Bài 6: Thiết kế lớp (Mục 4: Định nghĩa ra các trạng thái).
+Câu 12: Câu a và c đúng
+Giải thích: Use Case sinh ra nhằm nắm bắt rõ ràng yêu cầu chức năng từ phía người dùng (a), đồng thời kịch bản/use case cũng chính là căn cứ, nền tảng cốt lõi để viết các kịch bản kiểm thử hệ thống (c).
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Phần Phân tích yêu cầu phần mềm).
+Câu 13: Analysis, design, coding, testing, integration
+Giải thích: Theo các mô hình phát triển phần mềm hiện đại (như RUP hay Agile), mỗi phân đoạn lặp (iteration) trong giai đoạn xây dựng đều là một vòng đời thu nhỏ bao gồm đầy đủ từ phân tích, thiết kế, lập trình cho đến kiểm thử và tích hợp.
+Vị trí trong slide: Bài 1: Quy trình phát triển phần mềm (Mục 4: Mô hình phát triển phần mềm / Quy trình lặp).
+Câu 18: Cả 2 câu trên đều đúng
+Giải thích: Sơ đồ hoạt động hỗ trợ cấu trúc rẽ nhánh (Decision node): 1 luồng vào - nhiều luồng ra dựa trên điều kiện bảo vệ (a). Đồng thời nó có thanh đồng bộ Join để gộp (hợp nhất đồng bộ) các luồng chạy song song về lại 1 luồng chính (b).
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Phần cú pháp Sơ đồ hoạt động).
+Câu 19: Một thành phần có thể có nhiều hơn một giao diện, nó Biểu diễn cho một đơn vị (module) vật lý của mã lệnh
+Giải thích: Thành phần (Component) là một khối mã lệnh vật lý (như file .dll, .jar, source code module). Nó đóng gói mã nguồn và cung cấp/yêu cầu dịch vụ thông qua một hoặc nhiều giao diện (Interface).
+Vị trí trong slide: Bài 4: Xác định các phần tử thiết kế (Phần ánh xạ lớp phân tích sang thành phần thiết kế).
+Câu 20: Use Cases
+Giải thích: Bản thân các Use Case (thông qua đặc tả phạm vi hệ thống, những gì hệ thống làm và không làm) định nghĩa chính xác ranh giới/phạm vi (system boundary) của hệ thống cần xây dựng.
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Mục 2: Sơ đồ sử dụng trường hợp).
+Câu 25: Coupling (liên kết)
+Giải thích: Coupling (Độ kết khối/Độ liên kết) đo lường mức độ phụ thuộc lẫn nhau giữa các module/thành phần. Thiết kế tốt yêu cầu lỏng lẻo (Low Coupling). Ngược lại, Cohesion (a) đo độ gắn kết bên trong một module.
+Vị trí trong slide: Bài 4: Xác định các phần tử thiết kế (Slide minh họa vi phạm coupling giữa các tầng).
+Câu 26 & Câu 31: Relationship diagram
+Giải thích: Trong 13 sơ đồ tiêu chuẩn của UML không có sơ đồ nào tên là "Relationship diagram" (Sơ đồ mối quan hệ). Các sơ đồ Component, State-chart, Deployment đều là sơ đồ chuẩn của UML. (Lưu ý: Sơ đồ thực thể mối quan hệ là E-R diagram dùng trong DB, không thuộc UML).
+Vị trí trong slide: Bài 2 (Tổng quan UML) và Bài 7: Mô hình hóa dữ liệu.
+Câu 27: Kết hợp (association)
+Giải thích: Đường nối thẳng (không có mũi tên đứt nét kèm <<include>> hay <<extend>>, và không có hình tam giác rỗng của generalization) giữa hai phần tử trong sơ đồ UML thể hiện mối quan hệ kết hợp (Association) cơ bản.
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc (Slide 42: Mục Association và Link).
+
+Dưới đây là lời giải thích ngắn gọn kèm vị trí bài học trong slide cho các câu hỏi trắc nghiệm tiếp theo:
+Câu 32: c. Action
+Giải thích: Một đối tượng (Object) trong hướng đối tượng có 3 đặc tính cốt lõi: Định danh (Identity), Hành vi (Behavior) và Trạng thái (State). "Action" (Hành động) thường là khái niệm thuộc về sơ đồ hoạt động, không phải đặc tính định nghĩa đối tượng.
+Vị trí trong slide: Bài 1: Quy trình phát triển phần mềm (Mục 3: Phân tích thiết kế hướng đối tượng / Khái niệm đối tượng).
+Câu 33: a. Sự che dấu thông tin
+Giải thích: Tính đóng gói (Encapsulation) là việc nhóm các thuộc tính và phương thức có liên quan lại với nhau và che giấu các chi tiết cài đặt bên trong (Information hiding), chỉ cho phép truy xuất qua giao diện công khai.
+Vị trí trong slide: Bài 4: Xác định các phần tử thiết kế (Phần Đóng gói - Encapsulation).
+Câu 34: c. Attributes, operations and relationships
+Giải thích: Định nghĩa chuẩn của một Lớp (Class) trong UML là mô tả một tập hợp các đối tượng có chung các thuộc tính (Attributes), các thao tác/hành động (Operations) và các mối quan hệ (Relationships) với các lớp khác.
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc và Bài 6: Thiết kế lớp.
+Câu 37: d. Một lớp là một định nghĩa trừu tượng của một đối tượng
+Giải thích: Lớp đóng vai trò như một khuôn mẫu, một bản thiết kế định nghĩa trừu tượng, còn đối tượng là một thực thể cụ thể (thể hiện - instance) được sinh ra từ lớp đó.
+Vị trí trong slide: Bài 1: Quy trình phát triển phần mềm (Mục Phân tích thiết kế hướng đối tượng).
+Câu 38: a. Che dấu nhiều cài đặt khác nhau dựa trên cùng một giao diện.
+Giải thích: Tính đa hình (Polymorphism) cho phép các đối tượng khác nhau phản hồi cùng một thông điệp (giao diện gọi hàm) theo các cách cài đặt (hành vi) khác nhau.
+Vị trí trong slide: Bài 1: Quy trình phát triển phần mềm (Mục Nguyên lý hướng đối tượng).
+Câu 39: b. “Is a kind of”
+Giải thích: Mối quan hệ tổng quát hóa (Generalization / Thừa kế) thể hiện mối quan hệ "là một loại của" (ví dụ: Chó là một loại của Động vật). Trong khi đó "Is a part of" hay "Is composed of" là quan hệ thành phần (Aggregation/Composition).
+Vị trí trong slide: Bài 4: Xác định các phần tử thiết kế (Slide ví dụ về Generalization).
+Câu 40: c. Attributes, operations, relationships
+Giải thích: Khi thừa kế từ lớp cha, lớp con sẽ nhận lại toàn bộ cấu trúc bao gồm các thuộc tính (Attributes), các thao tác (Operations) và cả các mối quan hệ (Relationships) mà lớp cha đang có.
+Vị trí trong slide: Bài 4: Xác định các phần tử thiết kế (Slide 13: Ví dụ về Generalization trong Artifacts Package).
+Câu 41: a. Package
+Giải thích: Gói (Package) là cơ chế tổng quát của UML dùng để tổ chức các phần tử mô hình (như lớp, use case...) thành các nhóm nhằm mục đích dễ quản lý và phân cấp.
+Vị trí trong slide: Bài 4: Xác định các phần tử thiết kế (Mục Sự phụ thuộc package).
+Câu 42 & Câu 46: c. Một tầng kiến trúc
+Giải thích: Trong thiết kế kiến trúc phân tầng (Layering), người ta thường dùng các Package kèm theo Stereotype (ví dụ: <<layer>> hoặc chỉ định cụ thể) để đại diện cho một tầng như Application, Business, Middleware...
+Vị trí trong slide: Bài 4: Xác định các phần tử thiết kế (Slide minh họa thiết kế phân tầng hệ thống).
+Câu 47: c. Sơ đồ tuần tự
+Giải thích: Đường sinh tồn (Lifeline) là đường đứt nét thẳng đứng biểu diễn sự tồn tại của một đối tượng theo trục thời gian, là ký hiệu đặc trưng và cốt lõi trong sơ đồ tuần tự (Sequence Diagram).
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc (Mục Sơ đồ tương tác / Sơ đồ tuần tự).
+Câu 48: a. Sự mô tả của các use-cases đủ để tìm và phân tích các lớp cùng các đối tượng của nó.
+Giải thích: Câu này sai (nên đáp án chọn nó là đúng với yêu cầu "phát biểu không đúng"). Chỉ đọc đặc tả Use Case thôi là chưa đủ, mà cần phải phân tích kết hợp với Bảng từ điển (Glossary), Đặc tả bổ sung (Supplementary Specifications) và kiến thức miền nghiệp vụ để xác định đầy đủ các lớp.
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc (Mục 2: Các lớp phân tích - slide tổng quan đầu vào).
+Câu 49: b. Có thể có nhiều mối kết hợp giữa cùng 2 lớp, nhưng chúng phải mang các ý nghĩa khác nhau.
+Giải thích: Giữa 2 lớp hoàn toàn có thể có nhiều đường kết hợp (Multiple associations), với điều kiện mỗi đường phải biểu diễn một vai trò (role) hoặc ngữ nghĩa nghiệp vụ hoàn toàn khác nhau (ví dụ: Người vừa là Nhân viên vừa là Trưởng phòng của một Công ty).
+Vị trí trong slide: Bài 6: Thiết kế lớp (Mục 3: Định nghĩa ra mối quan hệ giữa các lớp).
+Câu 51: c. Các gói (Packages) ở tầng (layer) thấp hơn có thể phụ thuộc vào các gói ở tầng cao hơn.
+Giải thích: Câu này sai về nguyên tắc kiến trúc (nên chọn nó). Trong kiến trúc phân tầng chuẩn, các tầng cao hơn mới được quyền phụ thuộc và gọi xuống các tầng thấp hơn, các tầng thấp không được phép phụ thuộc ngược lên tầng cao để tránh lỗi vòng lặp phụ thuộc (vi phạm coupling).
+Vị trí trong slide: Bài 4: Xác định các phần tử thiết kế (Slide 10: Minh họa vi phạm coupling giữa các tầng).
+Câu 52: d. Subsystem hoặc Component
+Giải thích: Subsystem (Hệ thống con) và Component (Thành phần) là các cấu trúc UML cao cấp hơn Package, chúng không chỉ gom nhóm mà còn cung cấp cơ chế đóng gói và che giấu thông tin đầy đủ thông qua việc quy định Giao diện (Interface) tường minh.
+Vị trí trong slide: Bài 4: Xác định các phần tử thiết kế (Mục Ánh xạ từ lớp phân tích sang thành phần thiết kế).
+Câu 53: a) Khởi tạo (Inception)
+Giải thích: Theo quy trình RUP (chuẩn ITSS), giai đoạn Khởi tạo tập trung vào xác định phạm vi hệ thống, môi trường, ước lượng sơ bộ chi phí/thời gian và nhận diện các rủi ro lớn của dự án.
+Vị trí trong slide: Bài 1: Quy trình phát triển phần mềm (Mục 4: Giai đoạn vòng đời phát triển phần mềm).
+Câu 54: b) Tinh chế (Elaboration)
+Giải thích: Giai đoạn Tinh chế tập trung vào việc làm mịn yêu cầu, đánh giá sâu và giảm thiểu các rủi ro kỹ thuật trọng yếu, đồng thời thiết lập nên một Kiến trúc nền tảng ổn định (Architecture Baseline) và xác định các thành phần công nghệ sẽ sử dụng.
+Vị trí trong slide: Bài 1: Quy trình phát triển phần mềm.
+Câu 55: c) Xây dựng (construction)
+Giải thích: Giai đoạn Xây dựng là nơi phần lớn mã nguồn được viết, hệ thống được hiện thực hóa thông qua nhiều vòng lặp (iterations) để hoàn thiện toàn bộ các chức năng.
+Vị trí trong slide: Bài 1: Quy trình phát triển phần mềm.
+Câu 56: d) Chuyển giao (transition)
+Giải thích: Giai đoạn Chuyển giao đưa sản phẩm đến tay người dùng cuối, bao gồm cài đặt, kiểm thử chấp nhận (beta test), tiếp nhận phản hồi, đào tạo người dùng và sửa lỗi/bảo trì ban đầu.
+Vị trí trong slide: Bài 1: Quy trình phát triển phần mềm.
+Câu 57: a) Kịch bản
+Giải thích: Kịch bản (Scenario) là một thể hiện cụ thể (an instance of a use case), mô tả một dãy các bước tuần tự cụ thể trong một luồng sự kiện tương tác giữa tác nhân và hệ thống.
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Mục 3: Đặc tả / kịch bản ca sử dụng).
+Câu 58: a) Sơ đồ lớp
+Giải thích: Sơ đồ lớp (Class Diagram) là sơ đồ cấu trúc tĩnh chính, dùng để mô tả các kiểu đối tượng (lớp) trong hệ thống cùng các mối quan hệ tĩnh (như kết hợp, kế thừa, kết tập) giữa chúng.
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc và Bài 6: Thiết kế lớp.
+Câu 59: b) Mối kết hợp là các quy trình mà một lớp sẽ thực hiện
+Giải thích: Câu này sai (nên chọn). Mối kết hợp (Association) chỉ cấu trúc liên kết dữ liệu giữa các lớp, không phải là quy trình xử lý hay hành động/phương thức thực hiện của lớp.
+Vị trí trong slide: Bài 6: Thiết kế lớp (Mục Định nghĩa mối quan hệ).
+Câu 60: a) Thông điệp (message)
+Giải thích: Mũi tên nằm ngang (--------->) trong sơ đồ tuần tự được dùng để biểu diễn việc truyền một thông điệp (gọi hàm/phương thức) từ đối tượng này sang đối tượng khác.
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc (Mục Sơ đồ tương tác / Thông điệp).
+Câu 61: b) Điều kiện (condition)
+Giải thích: Trong sơ đồ tuần tự, văn bản đặt trong cặp dấu ngoặc vuông [some_text] được gọi là Điều kiện bảo vệ (Guard Condition) – thông điệp chỉ được gửi đi nếu điều kiện này đúng.
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc (Mục Sơ đồ tuần tự / Cấu trúc rẽ nhánh).
+Câu 62: b) Composition
+Giải thích: Quan hệ cấu thành/hợp thành (Composition) là một dạng kết tập mạnh, quy định các thành phần con chỉ thuộc về duy nhất một tổng thể, và vòng đời của chúng gắn liền với tổng thể (tổng thể mất đi thì thành phần con bị hủy theo).
+Vị trí trong slide: Bài 6: Thiết kế lớp (Mục Quan hệ Aggregation và Composition).
+Câu 67: d) Các câu trên đều đúng
+Giải thích: Mối kết hợp định tính (Qualified Association) sử dụng một thuộc tính khóa gọi là qualifier (đặt trong hình chữ nhật nhỏ) gắn vào đầu mối liên kết. Nó hoạt động giống như một chỉ mục/khóa (a), giúp thu hẹp phạm vi tìm kiếm từ quan hệ 1-nhiều xuống 1-1 (c) và qualifier này thực chất đại diện cho thông tin định danh (b).
+Vị trí trong slide: Bài 6: Thiết kế lớp (Mục Các mối quan hệ nâng cao / Qualified Association).
+Câu 68: d) Tất cả các câu trên đều đúng
+(Lưu ý: Đề bài ghi nhầm tiêu đề "mối kết hợp định tính" ở phần nội dung câu hỏi phía dưới, nhưng các phương án a, b, c thực chất đang mô tả về Lớp kết hợp - Association Class).
+Giải thích: Một lớp kết hợp (Association Class) vừa mang tính chất của một mối quan hệ kết hợp (định bản số/số lượng) vừa là một lớp thực thụ giúp đóng gói các thuộc tính riêng của mối quan hệ đó (b). Ký hiệu của nó trong UML là được nối vào đường kết hợp chính bằng một đường nét đứt (c).
+Vị trí trong slide: Bài 6: Thiết kế lớp (Mục 3: Định nghĩa mối quan hệ giữa các lớp / Association Class).
+Câu 70: c) Một lớp kết hợp chứa các luật bắt buộc phải đảm bảo các ràng buộc của mối quan hệ.
+(Lưu ý: Đáp án đánh dấu tích ✓ ở câu a trong đề bài bị sai về mặt ký hiệu UML tiêu chuẩn vì Association Class bắt buộc phải nối bằng đường đứt nét dashed/dotted line. Đáp án chuẩn xác nhất về mặt ngữ nghĩa là câu c).
+Giải thích: Lớp kết hợp đóng vai trò ràng buộc và quản lý thông tin điều kiện giữa hai lớp kết hợp với nhau (ví dụ: lớp KếtQuảHọcTập làm lớp kết hợp giữa SinhViên và LớpHọc).
+Vị trí trong slide: Bài 6: Thiết kế lớp (Mục Association Class).
+Câu 71: a) Sơ đồ trạng thái mô tả tất cả các trạng thái mà một đối tượng có thể có và sự chuyển dịch của các trạng thái như là kết quả của các sự kiện.
+Giải thích: Đây là định nghĩa cốt lõi của sơ đồ trạng thái (State Machine Diagram). Nó theo dõi vòng đời của một đối tượng đơn lẻ sở hữu các trạng thái phức tạp và cách nó phản ứng trước ngoại lực (sự kiện).
+Vị trí trong slide: Bài 6: Thiết kế lớp (Mục 4: Định nghĩa ra các trạng thái).
+Câu 72: a) Hành động (Action)
+Giải thích: Trong sơ đồ trạng thái, "Action" (Hành động) là một xử lý xảy ra trên đường chuyển dịch trạng thái (transition), có đặc tính là thực hiện rất nhanh (gần như tức thời) và không thể bị ngắt giữa chừng.
+Vị trí trong slide: Bài 6: Thiết kế lớp (Mục 4: Định nghĩa ra các trạng thái).
+Câu 73: b) Hoạt động (Activity)
+Giải thích: Ngược lại với Action, "Activity" (Hoạt động) trong sơ đồ trạng thái là xử lý gắn liền ở bên trong một trạng thái (do / Hoạt động). Nó có tính chất kéo dài theo thời gian và có thể bị ngắt (interrupt) nếu xuất hiện một sự kiện dịch chuyển trạng thái khác đi vào.
+Vị trí trong slide: Bài 6: Thiết kế lớp (Mục 4: Định nghĩa ra các trạng thái).
+Câu 75 & Câu 76: e/a) Sơ đồ trạng thái (State Diagrams)
+Giải thích: Sơ đồ trạng thái tập trung mô tả hành vi động của một đối tượng duy nhất xuyên suốt vòng đời của nó qua nhiều Use Case khác nhau của hệ thống.
+Vị trí trong slide: Bài 6: Thiết kế lớp (Mục 4: Định nghĩa ra các trạng thái).
+Câu 77: f) Sơ đồ tương tác (Interaction Diagrams)
+Giải thích: Sơ đồ tương tác (gồm sơ đồ tuần tự và sơ đồ cộng tác) là công cụ hoàn hảo để mô tả hành vi của nhiều đối tượng tương tác qua lại bằng thông điệp nhằm hiện thực hóa luồng xử lý bên trong một Use Case.
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc (Mục 3: Phân phối hành vi trường hợp sử dụng).
+Câu 78: d) Sơ đồ hoạt động (Activity Diagrams)
+Giải thích: Sơ đồ hoạt động giống như một lưu đồ nâng cao, tập trung mô tả một chuỗi/dãy các hành động, luồng xử lý công việc liên quan đến nhiều đối tượng (qua các phân làn - swimlane) và có thể bao quát nhiều kịch bản Use Case.
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Phần Sơ đồ hoạt động).
+Câu 79: d) Câu a và b đúng
+Giải thích: Ký hiệu dấu sao * đặt trước tên thông điệp hoặc hoạt động trong các sơ đồ động của UML (như Sơ đồ tuần tự/hoạt động) biểu thị tính chất lặp đi lặp lại (iteration) của hành động/thông điệp đó mà không cần vẽ tường minh một vòng lặp.
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc (Mục Sơ đồ tương tác).
+Câu 86: a) Cung cấp định nghĩa chặt chẽ mục đích các hành vi và trạng thái hợp lệ của lớp.
+Giải thích: Kỹ thuật "Design by Contract" (Thiết kế theo hợp đồng) sử dụng các ràng buộc Tiền điều kiện (Pre-condition), Hậu điều kiện (Post-condition) và Bất biến (Invariant) để định nghĩa cực kỳ chặt chẽ trách nhiệm và trạng thái hợp lệ của các phương thức trong lớp.
+Vị trí trong slide: Bài 6: Thiết kế lớp (Mục 2: Định nghĩa ra các thao tác/phương thức).
+Câu 92: e) Include
+Giải thích: Quan hệ <<include>> (Bao gồm) được sử dụng khi có các bước/luồng sự kiện trùng lặp giữa nhiều Use Case. Ta trích xuất phần chung đó ra thành một Use Case phụ để tái sử dụng, giúp giảm sự trùng lặp.
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Mục 2: Sơ đồ sử dụng trường hợp / Mối quan hệ giữa các Use Case).
+Câu 93: g) Extend
+Giải thích: Quan hệ <<extend>> (Mở rộng) được dùng khi ta muốn thêm các bước xử lý (thường là tùy chọn hoặc điều kiện đặc biệt) vào một Use Case nền tảng có sẵn tại một vị trí cụ thể (Extension Point) mà không làm thay đổi cấu trúc Use Case gốc.
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Mục 2: Sơ đồ sử dụng trường hợp / Mối quan hệ giữa các Use Case).
+Câu 94: d) Câu a và c đúng
+Giải thích: Use Case đứng ở góc nhìn của tác nhân (Actor) bên ngoài nhìn vào để thấy chức năng hệ thống làm được gì (external view - a). Do đứng ở mức yêu cầu bên ngoài, ở giai đoạn này hoàn toàn chưa có sự tương quan hay ràng buộc cơ cấu với các lớp kỹ thuật bên trong hệ thống (c).
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Mục 2: Sơ đồ sử dụng trường hợp).
+Câu 95: e) Mỗi thông điệp được biểu diễn bằng một mũi tên giữa đường sống của hai đối tượng.
+Giải thích: Trong sơ đồ tuần tự, thông điệp (message) luôn được vẽ dưới dạng các đường mũi tên nằm ngang (mũi tên liền nét cho thông điệp đồng bộ, đứt nét cho thông điệp phản hồi) nối giữa hai đường sinh tồn (lifeline).
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc (Mục Sơ đồ tuần tự).
+Câu 96: e) Sơ đồ đối tượng (Object Diagram)
+Giải thích: Sơ đồ đối tượng thể hiện cấu trúc tĩnh của các thể hiện (instance) cụ thể và các liên kết dữ liệu giữa chúng tại một thời điểm chạy snapshot xác định của hệ thống.
+Vị trí trong slide: Bài 3: Thiết kế kiến trúc (Slide ví dụ phân biệt giữa Class và Link/Object).
+Câu 97: g) Cả 2 câu trên đều đúng
+Giải thích: (Tương tự câu 18 đã giải thích) Sơ đồ hoạt động sử dụng cấu trúc rẽ nhánh (Decision node) để tạo ra nhiều hoạt động đi theo điều kiện bảo vệ (e) và sử dụng thanh đồng bộ (Join node) để gộp các luồng chạy song song (f).
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Phần chi tiết Sơ đồ hoạt động).
+Câu 98: e) Một thành phần có thể có nhiều hơn một giao diện, nó trình bày cho một đơn vị (module) vật lý của mã lệnh
+Giải thích: (Tương tự câu 19 đã giải thích) Thành phần (Component) đại diện cho một khối mã nguồn vật lý có thể thay thế và tái sử dụng, đóng gói mã bên trong và giao tiếp ra ngoài qua một hoặc nhiều giao diện (Interface).
+Vị trí trong slide: Bài 4: Xác định các phần tử thiết kế (Mục Ánh xạ lớp phân tích sang thành phần thiết kế).
+Câu 99: d) Câu a và b đúng
+Giải thích: Các yêu cầu chức năng của hệ thống được thu thập và mô tả đầu tiên trong các Use Case (a). Trong quy trình lặp hiện đại (như RUP), kế hoạch cho một phân đoạn lặp (iteration) được xác định bằng việc lựa chọn ra một số kịch bản Use Case trọng yếu để hiện thực hóa trước (b).
+Vị trí trong slide: Bài 1: Quy trình phát triển phần mềm và Bài 2: Mô hình hóa yêu cầu với Use Case.
+Câu 100: d) Tất cả các câu trên
+Giải thích: Mục tiêu của giai đoạn Tinh chế (Elaboration) là làm rõ phần lớn các yêu cầu chức năng Use Case (a), xác định các yêu cầu phi chức năng thông qua bản Đặc tả bổ sung (c) từ đó xây dựng được Kiến trúc nền tảng ổn định, làm cơ sở chính xác để ước lượng chi phí và thời gian cho đến cuối dự án (b).
+Vị trí trong slide: Bài 1: Quy trình phát triển phần mềm (Mục Giai đoạn vòng đời phát triển phần mềm).
+Câu 101: e) Use Cases
+Giải thích: (Tương tự câu 20) Bản thân các tài liệu đặc tả Use Case định nghĩa rõ biên giới hệ thống (system boundary), những gì thuộc phạm vi giải quyết của hệ thống và những gì nằm ngoài.
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case.
+Câu 102: a) Sơ đồ tuần tự hệ thống (System Sequence Diagram)
+Giải thích: Sơ đồ tuần tự hệ thống (SSD) coi toàn bộ hệ thống như một chiếc "hộp đen" (Black Box) duy nhất và chỉ tập trung biểu diễn các luồng sự kiện/thông điệp tương tác trực tiếp đi vào/đi ra giữa các Tác nhân (Actor) bên ngoài và Hệ thống đó.
+Vị trí trong slide: Bài 2: Mô hình hóa yêu cầu với Use Case (Mục 3: Đặc tả / kịch bản ca sử dụng).
