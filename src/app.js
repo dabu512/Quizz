@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function fetchEnv() {
     try {
-      const response = await fetch('/.env');
+      const response = await fetch('.env');
       if (!response.ok) return null;
       const text = await response.text();
       const env = {};

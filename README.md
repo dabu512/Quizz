@@ -23,14 +23,16 @@
 ## 🛠️ Cấu trúc thư mục
 
 ```text
-├── .env                  # Cấu hình biến môi trường kết nối Supabase (URL & Key)
-├── index.html            # Giao diện chính của ứng dụng
-├── app.js                # Logic ứng dụng, kết nối database và xử lý bài thi
-├── style.css             # Thiết kế giao diện (Dark/Light mode, Glassmorphism, Responsive)
+├── src/                  # Thư mục chứa mã nguồn của ứng dụng
+│   ├── .env              # Cấu hình biến môi trường kết nối Supabase (URL & Key)
+│   ├── index.html        # Giao diện chính của ứng dụng
+│   ├── app.js            # Logic ứng dụng, kết nối database và xử lý bài thi
+│   └── style.css         # Thiết kế giao diện (Dark/Light mode, Glassmorphism, Responsive)
 ├── package.json          # Quản lý thư viện phụ thuộc (Dependencies)
-├── File_docs/            # Thư mục tài liệu
+├── .gitignore            # Cấu hình loại bỏ các file/thư mục không cần đưa lên Git
+├── File_docs/            # Thư mục tài liệu (Bị bỏ qua bởi Git)
 │   └── supabase_setup.sql # Script SQL để khởi tạo bảng và dữ liệu mẫu trên Supabase
-└── Slide/                # Tài liệu slide bài giảng ôn tập
+└── Slide/                # Tài liệu slide bài giảng ôn tập (Bị bỏ qua bởi Git)
 ```
 
 ---
@@ -41,19 +43,19 @@
 Chạy script SQL trong file [File_docs/supabase_setup.sql](file:///d:/Quizz/File_docs/supabase_setup.sql) trên trình soạn thảo SQL của Supabase để tạo cấu trúc bảng (`jlpt_exams`, `jlpt_passages`, `jlpt_questions`) và nạp dữ liệu đề thi JLPT N3 mẫu.
 
 ### 2. Cấu hình biến môi trường
-Tạo file `.env` ở thư mục gốc của dự án với nội dung:
+Tạo file `.env` nằm trong thư mục `src/` với nội dung:
 ```env
 SUPABASE_URL=https://your-project-ref.supabase.co
 SUPABASE_KEY=your-supabase-anon-key
 ```
 
-*Lưu ý: Ứng dụng sẽ tự động tải các biến này từ file `.env` tại thời điểm chạy thông qua HTTP fetch.*
+*Lưu ý: Ứng dụng sẽ tự động tải các biến này từ file `src/.env` tại thời điểm chạy thông qua HTTP fetch.*
 
 ### 3. Chạy ứng dụng
-Do ứng dụng nạp cấu hình từ `.env` bằng cơ chế fetch HTTP, bạn cần chạy ứng dụng thông qua một local server (ví dụ: Live Server trong VS Code, `http-server` của npm, hoặc bất kỳ web server nào khác).
+Do ứng dụng nạp cấu hình từ `.env` bằng cơ chế fetch HTTP, bạn cần chạy ứng dụng thông qua một local server (ví dụ: Live Server trong VS Code, `http-server` của npm, hoặc bất kỳ web server nào khác) với thư mục gốc của server là thư mục `src/`.
 ```bash
-# Ví dụ chạy với http-server (nếu đã cài đặt)
-npx http-server .
+# Ví dụ chạy với http-server trỏ vào thư mục src/
+npx http-server src
 ```
 Truy cập qua địa chỉ `http://localhost:8080` (hoặc cổng tương ứng của server).
 
