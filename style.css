@@ -306,24 +306,46 @@ body {
 /* Main Layout */
 .quiz-body {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 1fr;
   gap: 24px;
+  align-items: start;
 }
 
-@media (max-width: 900px) {
-  .quiz-body {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Left Navigator Panel */
+/* Drawer Navigator Panel (Slides from left to right) */
 .navigator-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 320px;
+  z-index: 1100;
   background: var(--panel-bg);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  box-shadow: var(--shadow-md);
-  height: fit-content;
+  border-right: 1px solid var(--card-border);
+  box-shadow: var(--shadow-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+.navigator-panel.open {
+  transform: translateX(0);
+}
+
+/* Backdrop Layer */
+.nav-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1050;
+  transition: opacity 0.3s ease;
 }
 
 .panel-header {
@@ -439,12 +461,11 @@ body {
   background: var(--panel-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
-  padding: 32px;
+  padding: 20px;
   box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  min-height: 520px;
+  gap: 16px;
   position: relative;
 }
 
@@ -481,7 +502,8 @@ body {
 }
 
 .q-title-text {
-  font-size: 1.25rem;
+  font-size: 1.55rem;
+  font-size: 1.7rem; /* Tăng cỡ chữ câu hỏi */
   font-weight: 700;
   line-height: 1.5;
   color: var(--text-primary);
@@ -491,15 +513,15 @@ body {
 .options-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   margin-top: 8px;
 }
 
 .option-item {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  padding: 16px 20px;
+  gap: 10px;
+  padding: 12px 16px;
   background: rgba(15, 23, 42, 0.5);
   border: 2px solid var(--card-border);
   border-radius: var(--radius-md);
@@ -577,8 +599,9 @@ body {
 }
 
 .option-text {
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 1.15rem;
+  font-size: 1.25rem; /* Tăng cỡ chữ đáp án */
+  font-weight: 600;
   color: var(--text-primary);
   flex: 1;
 }
@@ -806,5 +829,576 @@ body {
 
 .switch-container:hover .switch-slider {
   border-color: #475569;
+}
+
+/* ==========================================================================
+   NEW STYLES FOR JLPT & SUPABASE APPLICATION
+   ========================================================================== */
+
+/* 1. Header Layout & Database Status */
+.brand-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .brand-info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+.header-settings {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+}
+
+.icon-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.icon-btn:hover svg {
+  transform: rotate(45deg);
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+  transition: var(--transition);
+}
+
+.status-badge.online {
+  background: var(--success-bg);
+  color: var(--success);
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+  animation: pulse-green 2s infinite;
+}
+
+.status-badge.offline {
+  background: var(--warning-bg);
+  color: var(--warning);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* 2. Tabs Styling */
+.menu-tabs-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 2px;
+  width: 100%;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: transparent;
+  transition: var(--transition);
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tab-btn.active {
+  color: var(--primary);
+}
+
+.tab-btn.active::after {
+  background: var(--primary);
+}
+
+/* 3. JLPT Exam Cards Custom Grid */
+.exam-part-card-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .exam-part-card-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.exam-part-btn {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.exam-part-btn:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  transform: translateY(-2px);
+}
+
+.exam-part-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.exam-part-qty {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* 4. Custom Quizz Config Forms */
+.config-card {
+  background: var(--panel-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+}
+
+.config-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 16px;
+}
+
+.quizz-config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-section.row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: 8px 0;
+}
+
+.section-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.custom-checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  background: rgba(30, 41, 59, 0.4);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+}
+
+.custom-checkbox-container input {
+  display: none;
+}
+
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--text-muted);
+  border-radius: 4px;
+  display: inline-block;
+  flex-shrink: 0;
+  position: relative;
+  margin-top: 2px;
+  transition: var(--transition);
+}
+
+.custom-checkbox-container input:checked + .custom-checkbox {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.custom-checkbox-container input:checked + .custom-checkbox::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  top: 2px;
+  left: 6px;
+  transform: rotate(45deg);
+}
+
+.custom-checkbox-container:hover {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: #475569;
+}
+
+.custom-checkbox-container input:checked ~ .checkbox-label-content .part-title {
+  color: #a5b4fc;
+}
+
+.checkbox-label-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.part-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  transition: var(--transition);
+}
+
+.part-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.select-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+}
+
+.select-wrapper select {
+  width: 100%;
+  padding: 12px 16px;
+  background: #0f172a;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  appearance: none;
+  transition: var(--transition);
+}
+
+.select-wrapper select:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.select-wrapper::after {
+  content: "▼";
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.start-btn {
+  max-width: 280px;
+  margin-top: 12px;
+}
+
+/* 5. Passage Split Pane Layout */
+.passage-panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 70vh;
+  overflow-y: auto;
+  border-top: 4px solid var(--primary);
+}
+
+.japanese-text {
+  font-family: 'Noto Sans JP', 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+  font-size: 1.05rem;
+}
+
+.passage-content {
+  white-space: pre-wrap;
+  color: var(--text-primary);
+}
+
+.q-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.q-section-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #818cf8;
+  background: var(--primary-light);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  align-self: flex-start;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+/* Responsive grid layout when passage is shown */
+.quiz-body.has-passage {
+  grid-template-columns: 1.1fr 1fr;
+  gap: 24px;
+}
+
+.passage-panel {
+  position: sticky;
+  top: 0;
+  max-height: calc(100vh - 280px);
+  overflow-y: auto;
+}
+
+.single-page-scroll {
+  max-height: calc(100vh - 280px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-right: 8px;
+}
+
+.questions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.question-card {
+  margin-bottom: 8px;
+  scroll-margin-top: 20px;
+}
+
+/* 2-Column layout for short options */
+.options-list.grid-2-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 1024px) {
+  .quiz-body.has-passage {
+    grid-template-columns: 1fr !important;
+  }
+  .passage-panel {
+    position: relative !important;
+    top: 0 !important;
+    max-height: 400px !important;
+    width: 100%;
+  }
+  .single-page-scroll {
+    max-height: none !important;
+    overflow-y: visible !important;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .options-list.grid-2-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 6. Modal connection Panel */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.modal-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+.modal-content {
+  background: var(--panel-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 520px;
+  padding: 32px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  z-index: 1010;
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 16px;
+}
+
+.modal-header h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: var(--transition);
+}
+
+.close-btn:hover {
+  color: var(--text-primary);
+}
+
+.modal-hint {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.form-group input {
+  padding: 12px 16px;
+  background: #0f172a;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.form-group input:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+.error-msg {
+  background: var(--danger-bg);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
