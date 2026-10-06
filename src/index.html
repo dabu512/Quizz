@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hệ Thống Ôn Luyện JLPT N3 - Supabase</title>
+  <title>Hệ Thống Học Tập & Luyện Quiz Theo Môn Học</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -14,289 +14,99 @@
 <body>
   <div class="app-container">
     
-    <!-- SECTION 1: MAIN MENU (Selection Screen) -->
-    <div id="menu-screen" class="screen">
-      <header class="menu-header">
-        <div class="brand-info-row">
-          <div class="brand-info">
-            <div class="logo-icon">🇯🇵</div>
+    <!-- TOP GLOBAL HEADER -->
+    <header class="menu-header">
+      <div class="brand-info-row">
+        <div class="brand-info">
+          <div class="logo-icon" id="app-logo">🎓</div>
+          <div>
+            <h1 id="app-heading-title">Học Tập & Luyện Quiz Theo Môn</h1>
+            <p class="subtitle">Quản lý môn học, tạo quiz trắc nghiệm từ file đề & đáp án TXT, đẩy lên database</p>
+          </div>
+        </div>
+        <div class="header-settings">
+          <button id="open-create-subject-btn" class="btn btn-primary" title="Tạo môn học mới">
+            <span>➕ Thêm Môn Học</span>
+          </button>
+          <button id="open-quick-upload-btn" class="btn btn-secondary" title="Tạo Quiz mới từ file TXT">
+            <span>⚡ Tạo Quiz Bằng TXT</span>
+          </button>
+          <button id="open-config-btn" class="btn btn-outline icon-btn" title="Cấu hình kết nối Supabase">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <span>Cấu hình DB</span>
+          </button>
+          <button id="open-sql-guide-btn" class="btn btn-outline icon-btn" title="Xem mã SQL tạo bảng Supabase">
+            <span>🔒 SQL Script</span>
+          </button>
+          <div id="db-status-badge" class="status-badge offline">Chế độ Offline</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- SCREEN 1: DANH SÁCH MÔN HỌC (SUBJECTS SCREEN) -->
+    <main id="subjects-screen" class="screen">
+      <div class="menu-title-row">
+        <div>
+          <h2>Danh Sách Môn Học</h2>
+          <p class="section-hint">Chọn môn học để xem các bài quiz ôn tập hoặc tạo bài quiz mới</p>
+        </div>
+        <span id="subjects-count-badge" class="badge-count">0 Môn học</span>
+      </div>
+
+      <div id="subjects-grid" class="subjects-grid">
+        <!-- Dynamic subject cards injected via JS -->
+      </div>
+    </main>
+
+    <!-- SCREEN 2: CHI TIẾT MÔN HỌC & DANH SÁCH QUIZ (SUBJECT DETAIL SCREEN) -->
+    <main id="subject-detail-screen" class="screen hidden">
+      <div class="subject-banner-card">
+        <div class="subject-banner-content">
+          <button id="back-to-subjects-btn" class="btn btn-outline btn-sm">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            Tất cả môn học
+          </button>
+          <div class="subject-banner-meta">
+            <span id="current-subject-icon" class="subject-large-icon">📚</span>
             <div>
-              <h1>Hệ Thống Ôn Luyện JLPT N3</h1>
-              <p class="subtitle">Luyện đề thi JLPT chuẩn cấu trúc và làm quizz trắc nghiệm tổng hợp</p>
+              <h1 id="current-subject-title">Tên Môn Học</h1>
+              <p id="current-subject-desc" class="subtitle">Mô tả môn học</p>
             </div>
           </div>
-          <div class="header-settings">
-            <button id="open-config-btn" class="btn btn-outline icon-btn" title="Cấu hình kết nối Supabase">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="3"/>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-              </svg>
-              <span>Kết nối Supabase</span>
-            </button>
-            <div id="db-status-badge" class="status-badge offline">Chế độ Offline</div>
-          </div>
         </div>
-
-        <div class="menu-tabs-row">
-          <button id="tab-exams-btn" class="tab-btn active">📝 Đề Thi JLPT</button>
-          <button id="tab-quizz-btn" class="tab-btn">⚡ Làm Quizz Ôn Tập</button>
-          <button id="tab-upload-btn" class="tab-btn">📤 Đẩy Câu Hỏi Lên DB</button>
+        <div class="subject-banner-actions">
+          <button id="open-create-quiz-for-subject-btn" class="btn btn-primary btn-lg">
+            <span>➕ Tạo Quiz Mới Cho Môn Này</span>
+          </button>
         </div>
-      </header>
+      </div>
 
-      <!-- TAB Content 1: JLPT Exams -->
-      <main id="exams-tab-content" class="menu-body tab-content">
-        <div class="menu-title-row">
-          <h2>Danh Sách Đề Thi JLPT chuẩn</h2>
-          <span id="exams-count-badge" class="badge-count">1 Đề thi</span>
-        </div>
-        <div id="exams-grid" class="quiz-grid">
-          <!-- Dynamic exam cards injected via JS -->
-        </div>
-      </main>
+      <div class="menu-title-row" style="margin-top: 10px;">
+        <h2>Danh Sách Bài Quiz Trong Môn</h2>
+        <span id="subject-quizzes-count-badge" class="badge-count">0 Bài Quiz</span>
+      </div>
 
-      <!-- TAB Content 2: Random Quiz Config -->
-      <main id="quizz-tab-content" class="menu-body tab-content hidden">
-        <div class="config-card">
-          <h2>Cấu Hình Làm Quizz Tổng Hợp</h2>
-          <p class="config-subtitle">Hệ thống sẽ lấy ngẫu nhiên các câu hỏi từ cơ sở dữ liệu dựa trên các dạng bài bạn đã chọn.</p>
-          
-          <form id="quizz-config-form" class="quizz-config-form">
-            <div class="form-section">
-              <label class="section-label">1. Chọn phần thi muốn ôn luyện:</label>
-              <div class="checkbox-group">
-                <label class="custom-checkbox-container">
-                  <input type="checkbox" name="quiz-parts" value="vocabulary" checked>
-                  <span class="custom-checkbox"></span>
-                  <div class="checkbox-label-content">
-                    <span class="part-title">Từ vựng - Chữ hán (文字・語彙)</span>
-                    <span class="part-desc">Cách đọc Kanji, viết Kanji, tìm từ gần nghĩa, cách dùng từ...</span>
-                  </div>
-                </label>
-                <label class="custom-checkbox-container">
-                  <input type="checkbox" name="quiz-parts" value="grammar" checked>
-                  <span class="custom-checkbox"></span>
-                  <div class="checkbox-label-content">
-                    <span class="part-title">Ngữ pháp (文法)</span>
-                    <span class="part-desc">Chọn thể ngữ pháp phù hợp, xếp sao (★), ngữ pháp trong văn bản...</span>
-                  </div>
-                </label>
-                <label class="custom-checkbox-container">
-                  <input type="checkbox" name="quiz-parts" value="reading" checked>
-                  <span class="custom-checkbox"></span>
-                  <div class="checkbox-label-content">
-                    <span class="part-title">Đọc hiểu (読解)</span>
-                    <span class="part-desc">Đoạn văn ngắn, đoạn văn trung bình, trường văn, tìm kiếm thông tin...</span>
-                  </div>
-                </label>
-              </div>
-            </div>
+      <div id="subject-quizzes-grid" class="quiz-grid">
+        <!-- Dynamic quiz cards for selected subject injected via JS -->
+      </div>
+    </main>
 
-            <div class="form-section">
-              <label class="section-label" for="quiz-question-limit">2. Số lượng câu hỏi:</label>
-              <div class="select-wrapper">
-                <select id="quiz-question-limit">
-                  <option value="10">10 câu</option>
-                  <option value="20" selected>20 câu</option>
-                  <option value="30">30 câu</option>
-                  <option value="50">50 câu</option>
-                  <option value="all">Tất cả câu hỏi</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-section row">
-              <label class="switch-container">
-                <input type="checkbox" id="menu-shuffle-questions" checked>
-                <span class="switch-slider"></span>
-                <span class="switch-text">Trộn câu hỏi</span>
-              </label>
-              <label class="switch-container">
-                <input type="checkbox" id="menu-shuffle-options" checked>
-                <span class="switch-slider"></span>
-                <span class="switch-text">Trộn đáp án</span>
-              </label>
-            </div>
-
-            <button type="submit" id="start-custom-quiz-btn" class="btn btn-primary btn-lg start-btn">
-              <span>Bắt Đầu Ôn Luyện ⚡</span>
-            </button>
-          </form>
-        </div>
-      </main>
-
-      <!-- TAB Content 3: Direct-to-Database Question Importer -->
-      <main id="upload-tab-content" class="menu-body tab-content hidden">
-        <div class="config-card upload-card">
-          <div class="upload-header-row">
-            <div>
-              <h2>📤 Tải Đề Thi & Câu Hỏi Lên Database</h2>
-              <p class="config-subtitle">Tự động bóc tách văn bản và đẩy câu hỏi trực tiếp lên cơ sở dữ liệu Supabase, không cần file JSON trung gian.</p>
-            </div>
-            <div style="display: flex; gap: 8px; align-items: center;">
-              <button type="button" id="open-rls-guide-btn" class="btn btn-outline btn-sm" title="Hướng dẫn cấu hình quyền ghi Supabase">
-                🔒 Quyền ghi Database (RLS)
-              </button>
-            </div>
-          </div>
-
-          <form id="upload-questions-form" class="quizz-config-form" onsubmit="return false;">
-            <!-- Step 1: Chọn hoặc Tạo đề thi -->
-            <div class="form-section">
-              <label class="section-label">1. Chọn đề thi mục tiêu:</label>
-              <div class="select-wrapper" style="margin-bottom: 12px;">
-                <select id="upload-exam-select">
-                  <option value="">-- Đang tải danh sách đề thi... --</option>
-                  <option value="new">+ [Tạo Đề Thi Mới...]</option>
-                </select>
-              </div>
-
-              <!-- Container tạo đề thi mới -->
-              <div id="new-exam-fields" class="sub-form-group hidden">
-                <div class="upload-grid-3">
-                  <div class="form-group">
-                    <label for="new-exam-name">Tên đề thi *</label>
-                    <input type="text" id="new-exam-name" placeholder="VD: JLPT N3 - 07/2024">
-                  </div>
-                  <div class="form-group">
-                    <label for="new-exam-level">Cấp độ</label>
-                    <select id="new-exam-level" class="custom-input-select">
-                      <option value="N3" selected>N3</option>
-                      <option value="N2">N2</option>
-                      <option value="N1">N1</option>
-                      <option value="N4">N4</option>
-                      <option value="N5">N5</option>
-                      <option value="Khác">Khác</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="new-exam-year">Năm & Tháng</label>
-                    <div style="display: flex; gap: 8px;">
-                      <input type="number" id="new-exam-year" value="2024" placeholder="Năm" style="width: 50%;">
-                      <input type="number" id="new-exam-month" value="7" placeholder="Tháng" style="width: 50%;">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Step 2: Phần thi & Bài đọc -->
-            <div class="form-section">
-              <label class="section-label">2. Phần thi & Dạng bài (Section):</label>
-              <div class="upload-grid-2">
-                <div class="form-group">
-                  <label for="upload-part-select">Phần thi (Part) *</label>
-                  <select id="upload-part-select" class="custom-input-select">
-                    <option value="vocabulary" selected>Từ vựng - Chữ hán (文字・語彙)</option>
-                    <option value="grammar">Ngữ pháp (文法)</option>
-                    <option value="reading">Đọc hiểu (読解)</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="upload-section-title">Tiêu đề nhóm bài (Section title / Mondai)</label>
-                  <input type="text" id="upload-section-title" value="問題 1: ＿＿＿のことばの読み方として最もよいものを、１・２・３・４から一つえらびなさい。">
-                </div>
-              </div>
-
-              <!-- Tùy chọn bài đọc kèm theo -->
-              <div class="passage-box" style="margin-top: 16px;">
-                <label class="custom-checkbox-container">
-                  <input type="checkbox" id="toggle-passage-input">
-                  <span class="custom-checkbox"></span>
-                  <div class="checkbox-label-content">
-                    <span class="part-title">Kèm theo bài đọc / đoạn văn ngữ cảnh (Passage)</span>
-                    <span class="part-desc">Dùng cho bài đọc hiểu trung/trường văn hoặc bài ngữ pháp điền từ vào bài văn.</span>
-                  </div>
-                </label>
-
-                <div id="passage-fields" class="sub-form-group hidden" style="margin-top: 14px;">
-                  <div class="form-group">
-                    <label for="upload-passage-title">Tiêu đề bài đọc</label>
-                    <input type="text" id="upload-passage-title" placeholder="VD: (1) 夏休みの思い出">
-                  </div>
-                  <div class="form-group" style="margin-top: 8px;">
-                    <label for="upload-passage-content">Nội dung bài đọc tiếng Nhật</label>
-                    <textarea id="upload-passage-content" rows="5" class="custom-textarea japanese-text" placeholder="Dán nội dung đoạn văn bài đọc tại đây..."></textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Step 3: Nhập nội dung câu hỏi -->
-            <div class="form-section">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
-                <label class="section-label" for="upload-raw-text">3. Dán danh sách câu hỏi trắc nghiệm:</label>
-                <div style="display: flex; gap: 8px;">
-                  <button type="button" id="fill-sample-vocab-btn" class="btn btn-outline btn-sm">📋 Mẫu Từ vựng</button>
-                  <button type="button" id="fill-sample-reading-btn" class="btn btn-outline btn-sm">📋 Mẫu Đọc hiểu</button>
-                </div>
-              </div>
-              <p class="config-subtitle" style="margin-bottom: 10px;">Hỗ trợ dán nhiều câu hỏi tự nhiên cùng lúc. Hệ thống tự động nhận diện câu hỏi, 4 đáp án (A,B,C,D hoặc 1,2,3,4), đáp án đúng và lời giải thích.</p>
-              
-              <textarea id="upload-raw-text" class="bulk-textarea" rows="12" placeholder="Dán văn bản câu hỏi vào đây. Ví dụ:
-Câu 1: ここから(じゅんばん)に見てください。
-A. 順番
-B. 項番
-C. 順審
-D. 項審
-Đáp án: A
-Giải thích: 順番 (じゅんばん) nghĩa là thứ tự, lần lượt.
-
-Câu 2: 父は銀行に(つとめて)います。
-1. 勧めて
-2. 働めて
-3. 仕めて
-4. 勤めて
-Đáp án: 4
-Giải thích: 勤めて nghĩa là làm việc tại ngân hàng."></textarea>
-              
-              <div class="parser-action-row" style="display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap;">
-                <button type="button" id="parse-preview-btn" class="btn btn-secondary">
-                  <span>⚡ Phân Tích & Xem Trước</span>
-                </button>
-                <button type="button" id="clear-upload-text-btn" class="btn btn-outline">
-                  <span>Làm mới ô nhập</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Step 4: Preview list -->
-            <div id="upload-preview-section" class="form-section hidden">
-              <div class="preview-header-bar">
-                <h3>Kết quả phân tích (<span id="parsed-count">0</span> câu hỏi)</h3>
-                <span id="parsed-badge" class="badge-count">Sẵn sàng đẩy lên DB</span>
-              </div>
-              
-              <div id="parsed-questions-preview-list" class="preview-questions-list">
-                <!-- Injected via JS -->
-              </div>
-
-              <div class="upload-final-actions" style="margin-top: 24px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-                <button type="button" id="execute-upload-btn" class="btn btn-primary btn-lg">
-                  <span>🚀 Đẩy Trực Tiếp Lên Supabase</span>
-                </button>
-                <div id="upload-progress-status" class="upload-status-text hidden"></div>
-              </div>
-            </div>
-
-          </form>
-        </div>
-      </main>
-    </div>
-
-    <!-- SECTION 2: QUIZ INTERFACE SCREEN -->
+    <!-- SCREEN 3: MÀN HÌNH LÀM BÀI QUIZ (QUIZ INTERFACE SCREEN) -->
     <div id="quiz-screen" class="screen hidden">
       <!-- Header with Dashboard Stats -->
       <header class="quiz-header">
         <div class="header-content">
           <div class="brand-info">
-            <button id="back-to-menu-btn" class="btn btn-outline btn-sm" title="Quay về menu chính">
+            <button id="back-from-quiz-btn" class="btn btn-outline btn-sm" title="Quay về danh sách quiz">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-              Quay lại menu
+              Quay lại môn học
             </button>
             <div>
-              <h1 id="active-quiz-title">Tên Đề Thi</h1>
-              <p id="active-quiz-desc" class="subtitle">Phần thi đang làm</p>
+              <h1 id="active-quiz-title">Tên Bài Quiz</h1>
+              <p id="active-quiz-desc" class="subtitle">Môn học đang ôn tập</p>
             </div>
           </div>
           <div class="header-actions">
@@ -362,7 +172,7 @@ Giải thích: 勤めて nghĩa là làm việc tại ngân hàng."></textarea>
       <!-- BACKDROP FOR THE DRAWER SIDEBAR -->
       <div id="nav-backdrop" class="nav-backdrop hidden"></div>
 
-      <!-- LEFT DRAWER SIDEBAR (Slides in from the left) -->
+      <!-- LEFT DRAWER SIDEBAR -->
       <aside id="navigator-drawer" class="navigator-panel drawer-collapsed">
         <div class="panel-header">
           <h3>Bản đồ câu hỏi</h3>
@@ -381,20 +191,8 @@ Giải thích: 勤めて nghĩa là làm việc tại ngân hàng."></textarea>
         </div>
       </aside>
 
-      <!-- Main Content Area -->
+      <!-- Main Content Area: Question Scroll List -->
       <main class="quiz-body">
-        
-        <!-- Left Panel: Passage Display (Visible only when questions have passages) -->
-        <aside id="passage-panel" class="passage-panel hidden">
-          <div class="panel-header">
-            <h3 id="passage-title">Đoạn văn đọc hiểu</h3>
-          </div>
-          <div id="passage-content" class="passage-content japanese-text">
-            <!-- Injected via JS -->
-          </div>
-        </aside>
-
-        <!-- Right Panel: Single Page Question Scroll Container -->
         <section class="question-panel single-page-scroll">
           <div id="questions-list-container" class="questions-list">
             <!-- All question cards render here dynamically -->
@@ -403,16 +201,172 @@ Giải thích: 勤めて nghĩa là làm việc tại ngân hàng."></textarea>
       </main>
     </div>
 
-    <!-- CONFIGURATION MODAL FOR SUPABASE -->
+    <!-- MODAL 1: THÊM MÔN HỌC MỚI -->
+    <div id="create-subject-modal" class="modal hidden">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>➕ Thêm Môn Học Mới</h3>
+          <button id="close-create-subject-btn" class="close-btn">&times;</button>
+        </div>
+        <form id="create-subject-form" class="modal-body" onsubmit="return false;">
+          <div class="form-group">
+            <label for="new-subject-name">Tên môn học *</label>
+            <input type="text" id="new-subject-name" placeholder="VD: Lập trình C++, Triết học, ITSS, Toán..." required>
+          </div>
+
+          <div class="form-group">
+            <label for="new-subject-desc">Mô tả môn học</label>
+            <input type="text" id="new-subject-desc" placeholder="VD: Ôn tập trắc nghiệm kiến thức học phần...">
+          </div>
+
+          <div class="form-group">
+            <label>Chọn biểu tượng môn học:</label>
+            <div id="icon-picker-row" class="icon-picker-row">
+              <button type="button" class="icon-choice active" data-icon="📚">📚</button>
+              <button type="button" class="icon-choice" data-icon="💻">💻</button>
+              <button type="button" class="icon-choice" data-icon="📐">📐</button>
+              <button type="button" class="icon-choice" data-icon="🔬">🔬</button>
+              <button type="button" class="icon-choice" data-icon="🌐">🌐</button>
+              <button type="button" class="icon-choice" data-icon="📝">📝</button>
+              <button type="button" class="icon-choice" data-icon="🎯">🎯</button>
+              <button type="button" class="icon-choice" data-icon="💡">💡</button>
+              <button type="button" class="icon-choice" data-icon="⚡">⚡</button>
+              <button type="button" class="icon-choice" data-icon="🇯🇵">🇯🇵</button>
+              <button type="button" class="icon-choice" data-icon="🇬🇧">🇬🇧</button>
+              <button type="button" class="icon-choice" data-icon="🧪">🧪</button>
+            </div>
+            <input type="hidden" id="selected-subject-icon" value="📚">
+          </div>
+
+          <div id="subject-modal-error" class="error-msg hidden"></div>
+
+          <div class="modal-actions">
+            <button type="submit" id="save-subject-btn" class="btn btn-primary">Lưu Môn Học</button>
+            <button type="button" id="cancel-subject-btn" class="btn btn-outline">Hủy</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL 2: TẠO QUIZ BẰNG FILE TXT & ĐẨY LÊN DATABASE -->
+    <div id="create-quiz-modal" class="modal hidden">
+      <div class="modal-overlay"></div>
+      <div class="modal-content modal-large">
+        <div class="modal-header">
+          <h3>⚡ Tạo Bài Quiz Bằng File TXT</h3>
+          <button id="close-create-quiz-btn" class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="create-quiz-form" onsubmit="return false;">
+            <!-- Quiz Metadata -->
+            <div class="upload-grid-2" style="margin-bottom: 16px;">
+              <div class="form-group">
+                <label for="quiz-subject-select">Thuộc môn học *</label>
+                <select id="quiz-subject-select" class="custom-input-select">
+                  <!-- Populated via JS -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="quiz-title-input">Tên bài Quiz *</label>
+                <input type="text" id="quiz-title-input" placeholder="VD: Trắc nghiệm Chương 1, Đề số 1..." required>
+              </div>
+            </div>
+
+            <!-- 1. Question file / text input -->
+            <div class="form-section">
+              <div class="section-label-row">
+                <label class="section-label">1. File hoặc Nội dung Câu hỏi (Đề bài):</label>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <button type="button" id="fill-sample-q-btn" class="btn btn-outline btn-sm">📋 Dán đề mẫu</button>
+                  <label class="btn btn-outline btn-sm file-upload-btn">
+                    📁 Chọn file câu hỏi .txt
+                    <input type="file" id="question-file-input" accept=".txt" style="display: none;">
+                  </label>
+                </div>
+              </div>
+              <p class="config-subtitle">Định dạng chuẩn yêu cầu:</p>
+              <pre class="format-sample-badge">Câu 1 : [Đề bài]
+A. [...]
+B. [...]
+C. [...]
+D. [...]</pre>
+              <textarea id="quiz-raw-questions" class="bulk-textarea" rows="8" placeholder="Dán nội dung câu hỏi tại đây hoặc chọn file .txt ở trên:
+Câu 1 : Hoàn chỉnh câu sau: Sơ đồ tuần tự được sử dụng khi nào?
+A. Phân tích use case
+B. Mô tả thuật toán
+C. Biểu diễn tương tác theo thời gian
+D. Tất cả đều đúng
+
+Câu 2 : Thành phần nào sau đây không thuộc UML?
+A. Class diagram
+B. Entity Relationship
+C. Use case diagram
+D. Statechart diagram"></textarea>
+            </div>
+
+            <!-- 2. Answer key file / text input (Optional) -->
+            <div class="form-section">
+              <div class="section-label-row">
+                <label class="section-label">2. File Đáp Án Của Quiz Đó (Tùy chọn - Nếu có file riêng):</label>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <button type="button" id="fill-sample-ans-btn" class="btn btn-outline btn-sm">📋 Dán đáp án mẫu</button>
+                  <label class="btn btn-outline btn-sm file-upload-btn">
+                    📁 Chọn file đáp án .txt
+                    <input type="file" id="answer-file-input" accept=".txt" style="display: none;">
+                  </label>
+                </div>
+              </div>
+              <p class="config-subtitle">Định dạng file đáp án riêng: <code>1. A</code>, <code>2. B</code>, <code>3. C</code>... (Nếu đáp án đã nằm trong file câu hỏi dạng "Đáp án: A", bạn có thể để trống ô này).</p>
+              <textarea id="quiz-raw-answers" class="bulk-textarea" rows="4" placeholder="Nếu có file/danh sách đáp án riêng, dán vào đây:
+1. C
+2. B"></textarea>
+            </div>
+
+            <!-- Action buttons: Preview -->
+            <div style="display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap;">
+              <button type="button" id="parse-preview-quiz-btn" class="btn btn-secondary">
+                <span>⚡ Phân Tích & Xem Trước</span>
+              </button>
+              <button type="button" id="clear-quiz-inputs-btn" class="btn btn-outline">
+                <span>Làm mới ô nhập</span>
+              </button>
+            </div>
+
+            <!-- 3. Preview section -->
+            <div id="quiz-preview-section" class="form-section hidden" style="margin-top: 20px;">
+              <div class="preview-header-bar">
+                <h3>Kết quả phân tích (<span id="parsed-quiz-count">0</span> câu hỏi)</h3>
+                <span id="parsed-quiz-badge" class="badge-count">Đã sẵn sàng</span>
+              </div>
+              
+              <div id="parsed-quiz-preview-list" class="preview-questions-list">
+                <!-- Preview cards injected via JS -->
+              </div>
+
+              <div class="upload-final-actions" style="margin-top: 20px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+                <button type="button" id="execute-save-quiz-btn" class="btn btn-primary btn-lg">
+                  <span>🚀 Lưu & Đẩy Lên Database</span>
+                </button>
+                <div id="quiz-save-status" class="upload-status-text hidden"></div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 3: CẤU HÌNH SUPABASE -->
     <div id="supabase-config-modal" class="modal hidden">
       <div class="modal-overlay"></div>
       <div class="modal-content">
         <div class="modal-header">
-          <h3>🔌 Kết Nối Supabase Database</h3>
+          <h3>🔌 Cấu Hình Kết Nối Database Supabase</h3>
           <button id="close-config-btn" class="close-btn">&times;</button>
         </div>
         <div class="modal-body">
-          <p class="modal-hint">Nhập thông tin kết nối Supabase của bạn dưới đây. Dữ liệu câu hỏi sẽ được tải trực tiếp từ Supabase. Nếu để trống, hệ thống sẽ chạy ở chế độ <strong>Offline (sử dụng đề N3 12/2024 tích hợp sẵn)</strong>.</p>
+          <p class="modal-hint">Nhập thông tin kết nối Supabase của bạn dưới đây. Dữ liệu môn học, bài quiz và câu hỏi sẽ được lưu trữ và đồng bộ hóa trực tiếp trên Supabase. Nếu để trống, hệ thống sẽ chạy ở chế độ <strong>Lưu Trữ Cục Bộ (Offline LocalStorage)</strong>.</p>
           
           <div class="form-group">
             <label for="supabase-url">Supabase Project URL</label>
@@ -427,7 +381,7 @@ Giải thích: 勤めて nghĩa là làm việc tại ngân hàng."></textarea>
           <div class="form-group">
             <label for="supabase-service-key">Supabase Service Role Key (Tùy chọn - Quyền Admin)</label>
             <input type="password" id="supabase-service-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
-            <small style="color: var(--text-muted); font-size: 0.8rem;">Khuyên dùng khi tải câu hỏi lên DB nếu database của bạn chặn quyền ghi của Anon key.</small>
+            <small style="color: var(--text-muted); font-size: 0.8rem;">Dùng để cấp toàn quyền ghi mà không bị chặn bởi RLS.</small>
           </div>
           
           <div id="config-error" class="error-msg hidden"></div>
@@ -440,35 +394,64 @@ Giải thích: 勤めて nghĩa là làm việc tại ngân hàng."></textarea>
       </div>
     </div>
 
-    <!-- MODAL HƯỚNG DẪN CẤP QUYỀN RLS TRÊN SUPABASE -->
-    <div id="supabase-rls-modal" class="modal hidden">
+    <!-- MODAL 4: HƯỚNG DẪN SQL TẠO BẢNG SUPABASE -->
+    <div id="supabase-sql-modal" class="modal hidden">
       <div class="modal-overlay"></div>
-      <div class="modal-content" style="max-width: 620px;">
+      <div class="modal-content modal-large">
         <div class="modal-header">
-          <h3>🔒 Cấu Hình Quyền Ghi Database (Supabase RLS)</h3>
-          <button id="close-rls-modal-btn" class="close-btn">&times;</button>
+          <h3>🔒 Mã SQL Khởi Tạo Database Trên Supabase</h3>
+          <button id="close-sql-modal-btn" class="close-btn">&times;</button>
         </div>
         <div class="modal-body">
-          <p class="modal-hint">Theo mặc định bảo mật của Supabase, khóa <code>anon</code> công khai chỉ có quyền đọc (SELECT). Để chức năng đẩy câu hỏi trực tiếp hoạt động với <code>anon</code> key, bạn chỉ cần sao chép đoạn mã SQL dưới đây và chạy trong mục <strong>SQL Editor</strong> trên trang quản trị Supabase:</p>
+          <p class="modal-hint">Để lưu các môn học và bài quiz trực tiếp lên tài khoản Supabase của bạn, sao chép toàn bộ đoạn mã SQL bên dưới và dán vào mục <strong>SQL Editor</strong> trên trang quản trị Supabase rồi bấm <strong>Run</strong>:</p>
           
           <div style="position: relative; margin: 12px 0;">
-            <textarea id="rls-sql-code" readonly rows="8" style="width: 100%; font-family: monospace; font-size: 0.82rem; padding: 12px; background: #0f172a; color: #38bdf8; border: 1px solid var(--card-border); border-radius: var(--radius-sm); resize: none;">-- Cấp quyền ghi câu hỏi cho Supabase
-GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated;
-GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated;
+            <textarea id="setup-sql-code" readonly rows="12" class="bulk-textarea" style="font-size: 0.82rem; color: #38bdf8; resize: none;">-- 1. Bảng Môn Học (subjects)
+CREATE TABLE IF NOT EXISTS public.subjects (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT,
+    icon TEXT DEFAULT '📚',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
 
--- Cho phép INSERT/UPDATE/DELETE thông qua RLS
-CREATE POLICY "Allow public insert on jlpt_exams" ON jlpt_exams FOR INSERT WITH CHECK (true);
-CREATE POLICY "Allow public insert on jlpt_passages" ON jlpt_passages FOR INSERT WITH CHECK (true);
-CREATE POLICY "Allow public insert on jlpt_questions" ON jlpt_questions FOR INSERT WITH CHECK (true);
-CREATE POLICY "Allow public update on jlpt_questions" ON jlpt_questions FOR UPDATE USING (true);
-CREATE POLICY "Allow public delete on jlpt_questions" ON jlpt_questions FOR DELETE USING (true);</textarea>
-            <button type="button" id="copy-sql-btn" class="btn btn-primary btn-sm" style="position: absolute; top: 10px; right: 10px;">📋 Sao chép SQL</button>
+-- 2. Bảng Bài Quiz / Đề Thi (quizzes)
+CREATE TABLE IF NOT EXISTS public.quizzes (
+    id SERIAL PRIMARY KEY,
+    subject_id INTEGER REFERENCES public.subjects(id) ON DELETE CASCADE,
+    title TEXT NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 3. Bảng Câu Hỏi Trắc Nghiệm (questions)
+CREATE TABLE IF NOT EXISTS public.questions (
+    id TEXT PRIMARY KEY,
+    quiz_id INTEGER REFERENCES public.quizzes(id) ON DELETE CASCADE,
+    question_number INTEGER NOT NULL,
+    question_text TEXT NOT NULL,
+    options TEXT[] NOT NULL,
+    correct_option INTEGER NOT NULL,
+    explanation TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 4. Bật Row Level Security & Quyền Truy Cập
+ALTER TABLE public.subjects ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.quizzes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.questions ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public all on subjects" ON public.subjects FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow public all on quizzes" ON public.quizzes FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow public all on questions" ON public.questions FOR ALL USING (true) WITH CHECK (true);
+
+GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated;</textarea>
+            <button type="button" id="copy-sql-code-btn" class="btn btn-primary btn-sm" style="position: absolute; top: 12px; right: 12px;">📋 Sao chép SQL</button>
           </div>
 
-          <p class="modal-hint"><em>Hoặc cách đơn giản hơn:</em> Bạn có thể lấy <code>service_role</code> secret key trong <em>Project Settings -> API</em> của Supabase và điền vào ô "Supabase Service Role Key" trong phần Cài đặt kết nối.</p>
-
           <div class="modal-actions" style="margin-top: 16px;">
-            <button type="button" id="close-rls-confirm-btn" class="btn btn-outline">Đã hiểu</button>
+            <button type="button" id="close-sql-confirm-btn" class="btn btn-outline">Đã hiểu</button>
           </div>
         </div>
       </div>
