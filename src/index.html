@@ -169,30 +169,27 @@
         </div>
       </header>
 
-      <!-- BACKDROP FOR THE DRAWER SIDEBAR -->
-      <div id="nav-backdrop" class="nav-backdrop hidden"></div>
-
-      <!-- LEFT DRAWER SIDEBAR -->
-      <aside id="navigator-drawer" class="navigator-panel drawer-collapsed">
-        <div class="panel-header">
-          <h3>Bản đồ câu hỏi</h3>
-          <span id="nav-total-count" class="legend-hint">0 câu</span>
-          <button id="close-drawer-btn" class="close-btn">&times;</button>
-        </div>
-
-        <div class="legend-container">
-          <div class="legend-item"><span class="badge badge-pending"></span> Chưa làm</div>
-          <div class="legend-item"><span class="badge badge-correct"></span> Đúng</div>
-          <div class="legend-item"><span class="badge badge-wrong"></span> Sai</div>
-        </div>
-
-        <div id="navigator-grid" class="nav-grid">
-          <!-- Question buttons injected via JS -->
-        </div>
-      </aside>
-
-      <!-- Main Content Area: Question Scroll List -->
+      <!-- Main Quiz Area: Left column = Question Map, Right column = Question Scroll List -->
       <main class="quiz-body">
+        <!-- LEFT COLUMN: QUESTION MAP (Ô BẤM CÁC CÂU CỐ ĐỊNH BÊN TRÁI) -->
+        <aside id="navigator-drawer" class="navigator-panel">
+          <div class="panel-header">
+            <h3>Bản đồ câu hỏi</h3>
+            <span id="nav-total-count" class="legend-hint">0 câu</span>
+          </div>
+
+          <div class="legend-container">
+            <div class="legend-item"><span class="badge badge-pending"></span> Chưa làm</div>
+            <div class="legend-item"><span class="badge badge-correct"></span> Đúng</div>
+            <div class="legend-item"><span class="badge badge-wrong"></span> Sai</div>
+          </div>
+
+          <div id="navigator-grid" class="nav-grid">
+            <!-- Question buttons injected via JS -->
+          </div>
+        </aside>
+
+        <!-- RIGHT COLUMN: QUESTIONS SCROLL LIST -->
         <section class="question-panel single-page-scroll">
           <div id="questions-list-container" class="questions-list">
             <!-- All question cards render here dynamically -->

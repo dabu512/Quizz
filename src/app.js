@@ -1294,6 +1294,8 @@ D. Router`;
   }
 
   function handleAnswerSelect(qIdx, selectedOIdx) {
+    if (userAnswers[qIdx].answered) return;
+
     const q = currentQuizData.questions[qIdx];
     const isCorrect = (selectedOIdx === q.correctIndex);
 
@@ -1303,8 +1305,48 @@ D. Router`;
       isCorrect: isCorrect
     };
 
-    renderQuestionList();
-    renderNavigatorGrid();
+    // 1. UPDATE ONLY THIS QUESTION CARD IN-PLACE (SILKY SMOOTH, NO REFLOW)
+    const card = document.getElementById(`q-card-${qIdx}`);
+    if (card) {
+      const optElements = card.querySelectorAll('.option-item');
+      optElements.forEach((optEl, oIdx) => {
+        optEl.classList.add('disabled');
+        const radio = optEl.querySelector('input[type="radio"]');
+        if (radio) {
+          radio.disabled = true;
+          if (oIdx === selectedOIdx) radio.checked = true;
+        }
+
+        const iconEl = optEl.querySelector('.option-status-icon');
+        if (oIdx === q.correctIndex) {
+          optEl.classList.add('correct-answer');
+          if (iconEl) iconEl.textContent = '✅';
+        } else if (oIdx === selectedOIdx) {
+          optEl.classList.add('wrong-answer');
+          if (iconEl) iconEl.textContent = '❌';
+        }
+      });
+
+      // Show explanation if not already shown
+      if (q.explanation && !card.querySelector('.explanation-box')) {
+        const expBox = document.createElement('div');
+        expBox.className = 'explanation-box';
+        expBox.style.marginTop = '14px';
+        expBox.innerHTML = `
+          <div class="explanation-header">💡 Giải thích đáp án:</div>
+          <div class="exp-content">${q.explanation}</div>
+        `;
+        card.appendChild(expBox);
+      }
+    }
+
+    // 2. UPDATE ONLY THIS NAV BUTTON (INSTANT FEEDBACK)
+    const navBtn = document.getElementById(`nav-btn-${qIdx}`);
+    if (navBtn) {
+      navBtn.classList.remove('correct', 'wrong');
+      navBtn.classList.add(isCorrect ? 'correct' : 'wrong');
+    }
+
     updateStats();
 
     // Show redo button if there are wrong answers
@@ -1320,16 +1362,20 @@ D. Router`;
 
     currentQuizData.questions.forEach((_, idx) => {
       const btn = document.createElement('button');
-      btn.className = 'nav-item';
+      btn.id = `nav-btn-${idx}`;
+      btn.className = 'nav-btn';
       btn.textContent = idx + 1;
 
       const ans = userAnswers[idx];
-      if (ans.answered) {
+      if (ans && ans.answered) {
         btn.classList.add(ans.isCorrect ? 'correct' : 'wrong');
       }
 
       btn.addEventListener('click', () => {
-        closeDrawer();
+        // Highlight active nav button
+        navGridEl.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('current'));
+        btn.classList.add('current');
+
         const card = document.getElementById(`q-card-${idx}`);
         if (card) {
           card.scrollIntoView({ behavior: 'smooth', block: 'center' });
