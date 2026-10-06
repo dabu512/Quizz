@@ -40,6 +40,7 @@
         <div class="menu-tabs-row">
           <button id="tab-exams-btn" class="tab-btn active">📝 Đề Thi JLPT</button>
           <button id="tab-quizz-btn" class="tab-btn">⚡ Làm Quizz Ôn Tập</button>
+          <button id="tab-upload-btn" class="tab-btn">📤 Đẩy Câu Hỏi Lên DB</button>
         </div>
       </header>
 
@@ -120,6 +121,164 @@
             <button type="submit" id="start-custom-quiz-btn" class="btn btn-primary btn-lg start-btn">
               <span>Bắt Đầu Ôn Luyện ⚡</span>
             </button>
+          </form>
+        </div>
+      </main>
+
+      <!-- TAB Content 3: Direct-to-Database Question Importer -->
+      <main id="upload-tab-content" class="menu-body tab-content hidden">
+        <div class="config-card upload-card">
+          <div class="upload-header-row">
+            <div>
+              <h2>📤 Tải Đề Thi & Câu Hỏi Lên Database</h2>
+              <p class="config-subtitle">Tự động bóc tách văn bản và đẩy câu hỏi trực tiếp lên cơ sở dữ liệu Supabase, không cần file JSON trung gian.</p>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <button type="button" id="open-rls-guide-btn" class="btn btn-outline btn-sm" title="Hướng dẫn cấu hình quyền ghi Supabase">
+                🔒 Quyền ghi Database (RLS)
+              </button>
+            </div>
+          </div>
+
+          <form id="upload-questions-form" class="quizz-config-form" onsubmit="return false;">
+            <!-- Step 1: Chọn hoặc Tạo đề thi -->
+            <div class="form-section">
+              <label class="section-label">1. Chọn đề thi mục tiêu:</label>
+              <div class="select-wrapper" style="margin-bottom: 12px;">
+                <select id="upload-exam-select">
+                  <option value="">-- Đang tải danh sách đề thi... --</option>
+                  <option value="new">+ [Tạo Đề Thi Mới...]</option>
+                </select>
+              </div>
+
+              <!-- Container tạo đề thi mới -->
+              <div id="new-exam-fields" class="sub-form-group hidden">
+                <div class="upload-grid-3">
+                  <div class="form-group">
+                    <label for="new-exam-name">Tên đề thi *</label>
+                    <input type="text" id="new-exam-name" placeholder="VD: JLPT N3 - 07/2024">
+                  </div>
+                  <div class="form-group">
+                    <label for="new-exam-level">Cấp độ</label>
+                    <select id="new-exam-level" class="custom-input-select">
+                      <option value="N3" selected>N3</option>
+                      <option value="N2">N2</option>
+                      <option value="N1">N1</option>
+                      <option value="N4">N4</option>
+                      <option value="N5">N5</option>
+                      <option value="Khác">Khác</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="new-exam-year">Năm & Tháng</label>
+                    <div style="display: flex; gap: 8px;">
+                      <input type="number" id="new-exam-year" value="2024" placeholder="Năm" style="width: 50%;">
+                      <input type="number" id="new-exam-month" value="7" placeholder="Tháng" style="width: 50%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Phần thi & Bài đọc -->
+            <div class="form-section">
+              <label class="section-label">2. Phần thi & Dạng bài (Section):</label>
+              <div class="upload-grid-2">
+                <div class="form-group">
+                  <label for="upload-part-select">Phần thi (Part) *</label>
+                  <select id="upload-part-select" class="custom-input-select">
+                    <option value="vocabulary" selected>Từ vựng - Chữ hán (文字・語彙)</option>
+                    <option value="grammar">Ngữ pháp (文法)</option>
+                    <option value="reading">Đọc hiểu (読解)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="upload-section-title">Tiêu đề nhóm bài (Section title / Mondai)</label>
+                  <input type="text" id="upload-section-title" value="問題 1: ＿＿＿のことばの読み方として最もよいものを、１・２・３・４から一つえらびなさい。">
+                </div>
+              </div>
+
+              <!-- Tùy chọn bài đọc kèm theo -->
+              <div class="passage-box" style="margin-top: 16px;">
+                <label class="custom-checkbox-container">
+                  <input type="checkbox" id="toggle-passage-input">
+                  <span class="custom-checkbox"></span>
+                  <div class="checkbox-label-content">
+                    <span class="part-title">Kèm theo bài đọc / đoạn văn ngữ cảnh (Passage)</span>
+                    <span class="part-desc">Dùng cho bài đọc hiểu trung/trường văn hoặc bài ngữ pháp điền từ vào bài văn.</span>
+                  </div>
+                </label>
+
+                <div id="passage-fields" class="sub-form-group hidden" style="margin-top: 14px;">
+                  <div class="form-group">
+                    <label for="upload-passage-title">Tiêu đề bài đọc</label>
+                    <input type="text" id="upload-passage-title" placeholder="VD: (1) 夏休みの思い出">
+                  </div>
+                  <div class="form-group" style="margin-top: 8px;">
+                    <label for="upload-passage-content">Nội dung bài đọc tiếng Nhật</label>
+                    <textarea id="upload-passage-content" rows="5" class="custom-textarea japanese-text" placeholder="Dán nội dung đoạn văn bài đọc tại đây..."></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Nhập nội dung câu hỏi -->
+            <div class="form-section">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                <label class="section-label" for="upload-raw-text">3. Dán danh sách câu hỏi trắc nghiệm:</label>
+                <div style="display: flex; gap: 8px;">
+                  <button type="button" id="fill-sample-vocab-btn" class="btn btn-outline btn-sm">📋 Mẫu Từ vựng</button>
+                  <button type="button" id="fill-sample-reading-btn" class="btn btn-outline btn-sm">📋 Mẫu Đọc hiểu</button>
+                </div>
+              </div>
+              <p class="config-subtitle" style="margin-bottom: 10px;">Hỗ trợ dán nhiều câu hỏi tự nhiên cùng lúc. Hệ thống tự động nhận diện câu hỏi, 4 đáp án (A,B,C,D hoặc 1,2,3,4), đáp án đúng và lời giải thích.</p>
+              
+              <textarea id="upload-raw-text" class="bulk-textarea" rows="12" placeholder="Dán văn bản câu hỏi vào đây. Ví dụ:
+Câu 1: ここから(じゅんばん)に見てください。
+A. 順番
+B. 項番
+C. 順審
+D. 項審
+Đáp án: A
+Giải thích: 順番 (じゅんばん) nghĩa là thứ tự, lần lượt.
+
+Câu 2: 父は銀行に(つとめて)います。
+1. 勧めて
+2. 働めて
+3. 仕めて
+4. 勤めて
+Đáp án: 4
+Giải thích: 勤めて nghĩa là làm việc tại ngân hàng."></textarea>
+              
+              <div class="parser-action-row" style="display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap;">
+                <button type="button" id="parse-preview-btn" class="btn btn-secondary">
+                  <span>⚡ Phân Tích & Xem Trước</span>
+                </button>
+                <button type="button" id="clear-upload-text-btn" class="btn btn-outline">
+                  <span>Làm mới ô nhập</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 4: Preview list -->
+            <div id="upload-preview-section" class="form-section hidden">
+              <div class="preview-header-bar">
+                <h3>Kết quả phân tích (<span id="parsed-count">0</span> câu hỏi)</h3>
+                <span id="parsed-badge" class="badge-count">Sẵn sàng đẩy lên DB</span>
+              </div>
+              
+              <div id="parsed-questions-preview-list" class="preview-questions-list">
+                <!-- Injected via JS -->
+              </div>
+
+              <div class="upload-final-actions" style="margin-top: 24px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+                <button type="button" id="execute-upload-btn" class="btn btn-primary btn-lg">
+                  <span>🚀 Đẩy Trực Tiếp Lên Supabase</span>
+                </button>
+                <div id="upload-progress-status" class="upload-status-text hidden"></div>
+              </div>
+            </div>
+
           </form>
         </div>
       </main>
@@ -264,12 +423,52 @@
             <label for="supabase-key">Supabase Anon Key</label>
             <input type="password" id="supabase-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
           </div>
+
+          <div class="form-group">
+            <label for="supabase-service-key">Supabase Service Role Key (Tùy chọn - Quyền Admin)</label>
+            <input type="password" id="supabase-service-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+            <small style="color: var(--text-muted); font-size: 0.8rem;">Khuyên dùng khi tải câu hỏi lên DB nếu database của bạn chặn quyền ghi của Anon key.</small>
+          </div>
           
           <div id="config-error" class="error-msg hidden"></div>
           
           <div class="modal-actions">
             <button id="save-config-btn" class="btn btn-primary">Lưu & Kết Nối</button>
             <button id="clear-config-btn" class="btn btn-outline danger">Xóa Kết Nối (Dùng Offline)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL HƯỚNG DẪN CẤP QUYỀN RLS TRÊN SUPABASE -->
+    <div id="supabase-rls-modal" class="modal hidden">
+      <div class="modal-overlay"></div>
+      <div class="modal-content" style="max-width: 620px;">
+        <div class="modal-header">
+          <h3>🔒 Cấu Hình Quyền Ghi Database (Supabase RLS)</h3>
+          <button id="close-rls-modal-btn" class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-hint">Theo mặc định bảo mật của Supabase, khóa <code>anon</code> công khai chỉ có quyền đọc (SELECT). Để chức năng đẩy câu hỏi trực tiếp hoạt động với <code>anon</code> key, bạn chỉ cần sao chép đoạn mã SQL dưới đây và chạy trong mục <strong>SQL Editor</strong> trên trang quản trị Supabase:</p>
+          
+          <div style="position: relative; margin: 12px 0;">
+            <textarea id="rls-sql-code" readonly rows="8" style="width: 100%; font-family: monospace; font-size: 0.82rem; padding: 12px; background: #0f172a; color: #38bdf8; border: 1px solid var(--card-border); border-radius: var(--radius-sm); resize: none;">-- Cấp quyền ghi câu hỏi cho Supabase
+GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated;
+
+-- Cho phép INSERT/UPDATE/DELETE thông qua RLS
+CREATE POLICY "Allow public insert on jlpt_exams" ON jlpt_exams FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public insert on jlpt_passages" ON jlpt_passages FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public insert on jlpt_questions" ON jlpt_questions FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public update on jlpt_questions" ON jlpt_questions FOR UPDATE USING (true);
+CREATE POLICY "Allow public delete on jlpt_questions" ON jlpt_questions FOR DELETE USING (true);</textarea>
+            <button type="button" id="copy-sql-btn" class="btn btn-primary btn-sm" style="position: absolute; top: 10px; right: 10px;">📋 Sao chép SQL</button>
+          </div>
+
+          <p class="modal-hint"><em>Hoặc cách đơn giản hơn:</em> Bạn có thể lấy <code>service_role</code> secret key trong <em>Project Settings -> API</em> của Supabase và điền vào ô "Supabase Service Role Key" trong phần Cài đặt kết nối.</p>
+
+          <div class="modal-actions" style="margin-top: 16px;">
+            <button type="button" id="close-rls-confirm-btn" class="btn btn-outline">Đã hiểu</button>
           </div>
         </div>
       </div>

@@ -1,12 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Supabase Connection & Credentials
   let supabaseClient = null;
+  let adminSupabaseClient = null;
   let isDbOnline = false;
 
   const supabaseUrlEl = document.getElementById('supabase-url');
   const supabaseKeyEl = document.getElementById('supabase-key');
+  const supabaseServiceKeyEl = document.getElementById('supabase-service-key');
   const dbStatusBadge = document.getElementById('db-status-badge');
   const configErrorEl = document.getElementById('config-error');
+
+  function getWriteClient() {
+    return adminSupabaseClient || supabaseClient;
+  }
 
   async function fetchEnv() {
     try {
@@ -36,12 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const env = await fetchEnv();
     const envUrl = env ? env.SUPABASE_URL : null;
     const envKey = env ? env.SUPABASE_KEY : null;
+    const envServiceKey = env ? (env.SUPABASE_SERVICE_KEY || env.SERVICE_ROLE_KEY) : null;
 
     const defaultUrl = envUrl || 'https://isehmewfvadfnpmusuih.supabase.co';
     const defaultKey = envKey || 'sb_publishable_Ejw82iBVAe2GiWBYla4SGg_umxqeK8a';
 
     const savedUrl = localStorage.getItem('supabase_url') || defaultUrl;
     const savedKey = localStorage.getItem('supabase_key') || defaultKey;
+    const savedServiceKey = localStorage.getItem('supabase_service_key') || envServiceKey || '';
 
     // Normalize URL to remove trailing /rest/v1 or /rest/v1/
     let normalizedUrl = savedUrl ? savedUrl.trim() : '';
@@ -53,6 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         if (typeof supabase !== 'undefined') {
           supabaseClient = supabase.createClient(normalizedUrl, savedKey);
+
+          // If service key provided, also create admin client for writes
+          if (savedServiceKey) {
+            try {
+              adminSupabaseClient = supabase.createClient(normalizedUrl, savedServiceKey);
+            } catch(errAdmin) {
+              console.warn("Failed to create admin client:", errAdmin);
+            }
+          }
           
           // Quick test connection
           const { data, error } = await supabaseClient.from('jlpt_exams').select('id').limit(1);
@@ -78,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (supabaseUrlEl) supabaseUrlEl.value = savedUrl || '';
     if (supabaseKeyEl) supabaseKeyEl.value = savedKey || '';
+    if (supabaseServiceKeyEl) supabaseServiceKeyEl.value = savedServiceKey || '';
   }
 
   // Settings Modal Controls
@@ -104,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saveConfigBtn.addEventListener('click', () => {
       const url = supabaseUrlEl.value.trim();
       const key = supabaseKeyEl.value.trim();
+      const serviceKey = supabaseServiceKeyEl ? supabaseServiceKeyEl.value.trim() : '';
 
       if (!url || !key) {
         configErrorEl.textContent = 'Vui lòng điền đầy đủ Supabase URL và Anon Key!';
@@ -113,6 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       localStorage.setItem('supabase_url', url);
       localStorage.setItem('supabase_key', key);
+      if (serviceKey) {
+        localStorage.setItem('supabase_service_key', serviceKey);
+      } else {
+        localStorage.removeItem('supabase_service_key');
+      }
+
       supabaseConfigModal.classList.add('hidden');
       alert('Đã lưu cấu hình! Ứng dụng sẽ tải lại để áp dụng kết nối mới.');
       window.location.reload();
@@ -123,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearConfigBtn.addEventListener('click', () => {
       localStorage.removeItem('supabase_url');
       localStorage.removeItem('supabase_key');
+      localStorage.removeItem('supabase_service_key');
       supabaseConfigModal.classList.add('hidden');
       alert('Đã ngắt kết nối! Ứng dụng yêu cầu thông tin cấu hình hợp lệ để sử dụng.');
       window.location.reload();
@@ -132,25 +158,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Menu Navigation and Tabs Toggling
   const tabExamsBtn = document.getElementById('tab-exams-btn');
   const tabQuizzBtn = document.getElementById('tab-quizz-btn');
+  const tabUploadBtn = document.getElementById('tab-upload-btn');
   const examsTabContent = document.getElementById('exams-tab-content');
   const quizzTabContent = document.getElementById('quizz-tab-content');
+  const uploadTabContent = document.getElementById('upload-tab-content');
 
   function switchTab(activeTab) {
-    if (activeTab === 'exams') {
-      tabExamsBtn.classList.add('active');
-      tabQuizzBtn.classList.remove('active');
-      examsTabContent.classList.remove('hidden');
-      quizzTabContent.classList.add('hidden');
-    } else {
-      tabExamsBtn.classList.remove('active');
-      tabQuizzBtn.classList.add('active');
-      examsTabContent.classList.add('hidden');
-      quizzTabContent.classList.remove('hidden');
+    if (tabExamsBtn) tabExamsBtn.classList.toggle('active', activeTab === 'exams');
+    if (tabQuizzBtn) tabQuizzBtn.classList.toggle('active', activeTab === 'quizz');
+    if (tabUploadBtn) tabUploadBtn.classList.toggle('active', activeTab === 'upload');
+
+    if (examsTabContent) examsTabContent.classList.toggle('hidden', activeTab !== 'exams');
+    if (quizzTabContent) quizzTabContent.classList.toggle('hidden', activeTab !== 'quizz');
+    if (uploadTabContent) uploadTabContent.classList.toggle('hidden', activeTab !== 'upload');
+
+    if (activeTab === 'upload') {
+      populateUploadExamsList();
     }
   }
 
   if (tabExamsBtn) tabExamsBtn.addEventListener('click', () => switchTab('exams'));
   if (tabQuizzBtn) tabQuizzBtn.addEventListener('click', () => switchTab('quizz'));
+  if (tabUploadBtn) tabUploadBtn.addEventListener('click', () => switchTab('upload'));
 
   // 3. Database loaders and fetchers
   async function loadExams() {
@@ -1177,6 +1206,488 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // =========================================================================
+  // 5. DIRECT DATABASE UPLOAD & PARSER MODULE
+  // =========================================================================
+  const uploadExamSelect = document.getElementById('upload-exam-select');
+  const newExamFields = document.getElementById('new-exam-fields');
+  const newExamNameInput = document.getElementById('new-exam-name');
+  const newExamLevelSelect = document.getElementById('new-exam-level');
+  const newExamYearInput = document.getElementById('new-exam-year');
+  const newExamMonthInput = document.getElementById('new-exam-month');
+  const uploadPartSelect = document.getElementById('upload-part-select');
+  const uploadSectionTitleInput = document.getElementById('upload-section-title');
+  const togglePassageInput = document.getElementById('toggle-passage-input');
+  const passageFields = document.getElementById('passage-fields');
+  const uploadPassageTitle = document.getElementById('upload-passage-title');
+  const uploadPassageContent = document.getElementById('upload-passage-content');
+  const uploadRawText = document.getElementById('upload-raw-text');
+  const fillSampleVocabBtn = document.getElementById('fill-sample-vocab-btn');
+  const fillSampleReadingBtn = document.getElementById('fill-sample-reading-btn');
+  const parsePreviewBtn = document.getElementById('parse-preview-btn');
+  const clearUploadTextBtn = document.getElementById('clear-upload-text-btn');
+  const uploadPreviewSection = document.getElementById('upload-preview-section');
+  const parsedCountEl = document.getElementById('parsed-count');
+  const parsedBadgeEl = document.getElementById('parsed-badge');
+  const parsedQuestionsPreviewList = document.getElementById('parsed-questions-preview-list');
+  const executeUploadBtn = document.getElementById('execute-upload-btn');
+  const uploadProgressStatus = document.getElementById('upload-progress-status');
+
+  // RLS guidance modal controls
+  const openRlsGuideBtn = document.getElementById('open-rls-guide-btn');
+  const closeRlsModalBtn = document.getElementById('close-rls-modal-btn');
+  const closeRlsConfirmBtn = document.getElementById('close-rls-confirm-btn');
+  const supabaseRlsModal = document.getElementById('supabase-rls-modal');
+  const copySqlBtn = document.getElementById('copy-sql-btn');
+  const rlsSqlCode = document.getElementById('rls-sql-code');
+
+  let parsedQuestionsList = [];
+
+  async function populateUploadExamsList() {
+    if (!uploadExamSelect) return;
+    const exams = await loadExams();
+    uploadExamSelect.innerHTML = '';
+
+    if (exams && exams.length > 0) {
+      exams.forEach(ex => {
+        const opt = document.createElement('option');
+        opt.value = ex.id;
+        opt.textContent = `${ex.name} (${ex.level || 'JLPT'})`;
+        uploadExamSelect.appendChild(opt);
+      });
+    }
+
+    const newOpt = document.createElement('option');
+    newOpt.value = 'new';
+    newOpt.textContent = '➕ [Tạo Đề Thi Mới...]';
+    uploadExamSelect.appendChild(newOpt);
+
+    if (!exams || exams.length === 0) {
+      uploadExamSelect.value = 'new';
+      if (newExamFields) newExamFields.classList.remove('hidden');
+    } else {
+      if (newExamFields) newExamFields.classList.add('hidden');
+    }
+  }
+
+  if (uploadExamSelect) {
+    uploadExamSelect.addEventListener('change', () => {
+      if (uploadExamSelect.value === 'new') {
+        if (newExamFields) newExamFields.classList.remove('hidden');
+      } else {
+        if (newExamFields) newExamFields.classList.add('hidden');
+      }
+    });
+  }
+
+  if (uploadPartSelect) {
+    uploadPartSelect.addEventListener('change', () => {
+      const part = uploadPartSelect.value;
+      if (part === 'vocabulary') {
+        uploadSectionTitleInput.value = '問題 1: ＿＿＿のことばの読み方として最もよいものを、１・２・３・４から一つえらびなさい。';
+        togglePassageInput.checked = false;
+        passageFields.classList.add('hidden');
+      } else if (part === 'grammar') {
+        uploadSectionTitleInput.value = '問題 7: 次の文の（ ）に入れるのに最もよいものを、１・２・３・４から一つえらびなさい。';
+      } else if (part === 'reading') {
+        uploadSectionTitleInput.value = '問題 10: 次の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つえらびなさい。';
+        togglePassageInput.checked = true;
+        passageFields.classList.remove('hidden');
+      }
+    });
+  }
+
+  if (togglePassageInput) {
+    togglePassageInput.addEventListener('change', () => {
+      if (togglePassageInput.checked) {
+        passageFields.classList.remove('hidden');
+      } else {
+        passageFields.classList.add('hidden');
+      }
+    });
+  }
+
+  // Sample data buttons
+  if (fillSampleVocabBtn) {
+    fillSampleVocabBtn.addEventListener('click', () => {
+      uploadPartSelect.value = 'vocabulary';
+      uploadSectionTitleInput.value = '問題 1: ＿＿＿のことばの読み方として最もよいものを、１・２・３・４から一つえらびなさい。';
+      togglePassageInput.checked = false;
+      passageFields.classList.add('hidden');
+      uploadRawText.value = `Câu 1: ここから(じゅんばん)に見てください。
+A. 順番
+B. 項番
+C. 順審
+D. 項審
+Đáp án: A
+Giải thích: 順番 (じゅんばん) nghĩa là thứ tự, lần lượt.
+
+Câu 2: 父は銀行に(つとめて)います。
+1. 勧めて
+2. 働めて
+3. 仕めて
+4. 勤めて
+Đáp án: 4
+Giải thích: 勤めて (つとめて) nghĩa là làm việc tại.
+
+Câu 3: ポケットが(さゆう)にあるんですね。
+A. 裏表
+B. 右左
+C. 表裏
+D. 左右
+Đáp án: D
+Giải thích: 左右 (さゆう) nghĩa là trái phải.`;
+      parseQuestions();
+    });
+  }
+
+  if (fillSampleReadingBtn) {
+    fillSampleReadingBtn.addEventListener('click', () => {
+      uploadPartSelect.value = 'reading';
+      uploadSectionTitleInput.value = '問題 10: 次の文章を読んで、後の問いに対する答えとして最もよいものを、１・２・３・４から一つえらびなさい。';
+      togglePassageInput.checked = true;
+      passageFields.classList.remove('hidden');
+      uploadPassageTitle.value = '(1) 古民家について';
+      uploadPassageContent.value = `最近、日本では古民家、つまり昔から伝わる建築方法で作られた古い家を、直して住む人が増えている。ただ、少し前までは、古民家を直した家に住む人は少なかった。
+しかし、その良さに30年も前に気づいていた外国人がいる。ドイツ人の建築家、Kさんだ。
+冬にたくさんの雪が降るT村には、30年前、住む人のいない壊れた古民家がたくさんあった。あるとき、偶然T村を訪ねたKさんは、一軒の古民家をとても気に入ってすぐに買い、自分が住むために直し始めた。日本の古民家には、丈夫で立派な木の材料が使われている。それを利用して直せば、長く住めるいい家になると考えたのだ。`;
+      uploadRawText.value = `Câu 1: この文章で、KさんがT村の古民家を買った理由として最も合っているものはどれか。
+A. T村の雪景色がとても美しかったから。
+B. 丈夫で立派な木の材料をそのまま利用して、長く住める家にできると考えたから。
+C. 村の人々から古民家を直してほしいと頼まれたから。
+D. 古民家を直して高く売るビジネスを計画していたから。
+Đáp án: B
+Giải thích: Theo đoạn văn: "日本の古民家には、丈夫で立派な木の材料が使われている。それを利用して直せば、長く住めるいい家になると考えたのだ。"`;
+      parseQuestions();
+    });
+  }
+
+  if (clearUploadTextBtn) {
+    clearUploadTextBtn.addEventListener('click', () => {
+      uploadRawText.value = '';
+      parsedQuestionsList = [];
+      uploadPreviewSection.classList.add('hidden');
+      uploadProgressStatus.classList.add('hidden');
+    });
+  }
+
+  // Smart Question Parser
+  function parseQuestionsFromRawText(rawText) {
+    if (!rawText || !rawText.trim()) return [];
+
+    const text = rawText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    const lines = text.split('\n');
+    const questions = [];
+    let currentQ = null;
+
+    function finalize(q) {
+      if (!q || !q.question_text) return;
+      if (q.options.length < 2) return;
+      if (!q.correct_option) {
+        q.correct_option = 1;
+        q.hasWarning = true;
+      }
+      questions.push(q);
+    }
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+
+      const qHeaderMatch = line.match(/^(?:Câu|Question|\#)\s*(\d+)[\.\:\)\/\-]*\s*(.*)$/i) || 
+                           (!currentQ && line.match(/^(\d+)[\.\:\)\/\-]+\s*(.*)$/));
+
+      const isNewQuestion = qHeaderMatch && (
+        !currentQ || 
+        currentQ.options.length >= 2 || 
+        parseInt(qHeaderMatch[1], 10) > (currentQ ? currentQ.question_number : 0)
+      );
+
+      const optMatch = line.match(/^(\*)?\s*(?:\[?([A-Da-d1-4])\]?|([A-Da-d1-4]))[\.\)\:\/\-]\s*(.*)$/);
+      const ansMatch = line.match(/^(?:Đáp\s*án|Đ\/A|ĐA|Key|Answer|Ans|Đúng)[\s\:\=\-]+([A-Da-d1-4])/i);
+      const expMatch = line.match(/^(?:Giải\s*thích|Ghi\s*chú|Note|HD|Hướng\s*dẫn|Exp)[\s\:\-]+(.*)$/i);
+
+      if (ansMatch && currentQ) {
+        const letter = ansMatch[1].toUpperCase();
+        let idx = 1;
+        if (letter === 'A' || letter === '1') idx = 1;
+        else if (letter === 'B' || letter === '2') idx = 2;
+        else if (letter === 'C' || letter === '3') idx = 3;
+        else if (letter === 'D' || letter === '4') idx = 4;
+        currentQ.correct_option = idx;
+      } else if (expMatch && currentQ) {
+        currentQ.explanation = expMatch[1].trim();
+      } else if (optMatch && currentQ && (!isNewQuestion || currentQ.options.length < 4)) {
+        const isAsterisk = !!optMatch[1];
+        const optLetter = (optMatch[2] || optMatch[3]).toUpperCase();
+        const optText = optMatch[4].trim();
+
+        currentQ.options.push(optText || optLetter);
+
+        if (isAsterisk) {
+          let idx = currentQ.options.length;
+          if (optLetter === 'A' || optLetter === '1') idx = 1;
+          else if (optLetter === 'B' || optLetter === '2') idx = 2;
+          else if (optLetter === 'C' || optLetter === '3') idx = 3;
+          else if (optLetter === 'D' || optLetter === '4') idx = 4;
+          currentQ.correct_option = idx;
+        }
+      } else if (isNewQuestion) {
+        if (currentQ) finalize(currentQ);
+        currentQ = {
+          question_number: parseInt(qHeaderMatch[1], 10) || (questions.length + 1),
+          question_text: qHeaderMatch[2].trim(),
+          options: [],
+          correct_option: null,
+          explanation: ''
+        };
+      } else if (currentQ) {
+        if (currentQ.options.length === 0) {
+          currentQ.question_text += ' ' + line;
+        } else if (currentQ.explanation) {
+          currentQ.explanation += ' ' + line;
+        } else {
+          currentQ.options[currentQ.options.length - 1] += ' ' + line;
+        }
+      }
+    }
+
+    if (currentQ) finalize(currentQ);
+    return questions;
+  }
+
+  function renderPreviewQuestions() {
+    if (!parsedQuestionsPreviewList) return;
+    parsedQuestionsPreviewList.innerHTML = '';
+
+    parsedQuestionsList.forEach((q, idx) => {
+      const card = document.createElement('div');
+      card.className = 'preview-q-card';
+
+      const optLetters = ['A', 'B', 'C', 'D'];
+      const optionsHtml = q.options.map((opt, oIdx) => {
+        const isCorrect = (oIdx + 1) === q.correct_option;
+        return `
+          <div class="preview-opt-pill ${isCorrect ? 'is-correct' : ''}">
+            <strong>${optLetters[oIdx] || (oIdx + 1)}.</strong>
+            <span>${opt}</span>
+          </div>
+        `;
+      }).join('');
+
+      card.innerHTML = `
+        <div class="preview-q-header">
+          <span class="preview-q-num">Câu ${q.question_number || (idx + 1)}</span>
+          <button type="button" class="preview-q-remove" data-idx="${idx}" title="Xóa câu này">&times;</button>
+        </div>
+        <div class="preview-q-text japanese-text">${q.question_text}</div>
+        <div class="preview-options-grid">${optionsHtml}</div>
+        ${q.explanation ? `<div class="preview-q-exp">💡 ${q.explanation}</div>` : ''}
+        ${q.hasWarning ? `<div style="color: #f59e0b; font-size: 0.8rem;">⚠️ Chưa phát hiện đáp án rõ ràng, mặc định đáp án 1</div>` : ''}
+      `;
+
+      parsedQuestionsPreviewList.appendChild(card);
+    });
+
+    // Remove buttons in preview
+    const removeBtns = parsedQuestionsPreviewList.querySelectorAll('.preview-q-remove');
+    removeBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idxToRemove = parseInt(e.target.dataset.idx, 10);
+        parsedQuestionsList.splice(idxToRemove, 1);
+        parsedCountEl.textContent = parsedQuestionsList.length;
+        if (parsedQuestionsList.length === 0) {
+          uploadPreviewSection.classList.add('hidden');
+        } else {
+          renderPreviewQuestions();
+        }
+      });
+    });
+  }
+
+  function parseQuestions() {
+    const raw = uploadRawText.value.trim();
+    if (!raw) {
+      alert("Vui lòng dán nội dung các câu hỏi vào ô nhập trước!");
+      return;
+    }
+
+    parsedQuestionsList = parseQuestionsFromRawText(raw);
+    if (parsedQuestionsList.length === 0) {
+      alert("Không tìm thấy câu hỏi hợp lệ nào trong văn bản đã dán. Vui lòng kiểm tra lại cấu trúc định dạng hoặc bấm '📋 Dán mẫu thử' để tham khảo!");
+      return;
+    }
+
+    parsedCountEl.textContent = parsedQuestionsList.length;
+    parsedBadgeEl.textContent = `${parsedQuestionsList.length} câu đã sẵn sàng`;
+    renderPreviewQuestions();
+    uploadPreviewSection.classList.remove('hidden');
+    uploadPreviewSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  if (parsePreviewBtn) {
+    parsePreviewBtn.addEventListener('click', parseQuestions);
+  }
+
+  // Upload to Supabase handler
+  async function uploadQuestionsToSupabase() {
+    if (!isDbOnline || !supabaseClient) {
+      alert("Chưa kết nối cơ sở dữ liệu Supabase! Vui lòng cấu hình kết nối ở góc phải trước.");
+      return;
+    }
+
+    if (!parsedQuestionsList || parsedQuestionsList.length === 0) {
+      alert("Chưa có câu hỏi nào được phân tích! Vui lòng dán câu hỏi và bấm '⚡ Phân Tích & Xem Trước'.");
+      return;
+    }
+
+    const client = getWriteClient();
+    const examSelectVal = uploadExamSelect.value;
+    let examId = null;
+
+    uploadProgressStatus.className = 'upload-status-text loading';
+    uploadProgressStatus.textContent = '⏳ Đang kết nối Supabase...';
+    uploadProgressStatus.classList.remove('hidden');
+    executeUploadBtn.disabled = true;
+
+    try {
+      // 1. Resolve Exam
+      if (examSelectVal === 'new') {
+        const name = newExamNameInput.value.trim();
+        const level = newExamLevelSelect.value;
+        const year = parseInt(newExamYearInput.value, 10) || new Date().getFullYear();
+        const month = parseInt(newExamMonthInput.value, 10) || 7;
+
+        if (!name) {
+          throw new Error("Vui lòng nhập tên đề thi mới!");
+        }
+
+        uploadProgressStatus.textContent = '⏳ Đang tạo đề thi mới...';
+        const { data: newExam, error: examErr } = await client
+          .from('jlpt_exams')
+          .insert([{ name, level, year, month }])
+          .select('id')
+          .single();
+
+        if (examErr) throw examErr;
+        examId = newExam.id;
+      } else {
+        examId = parseInt(examSelectVal, 10);
+        if (!examId) {
+          throw new Error("Vui lòng chọn đề thi mục tiêu!");
+        }
+      }
+
+      // 2. Resolve Passage (if enabled)
+      let passageId = null;
+      if (togglePassageInput.checked) {
+        const pTitle = uploadPassageTitle.value.trim() || 'Bài đọc ngữ cảnh';
+        const pContent = uploadPassageContent.value.trim();
+        if (pContent) {
+          uploadProgressStatus.textContent = '⏳ Đang lưu bài đọc ngữ cảnh...';
+          passageId = `passage_${uploadPartSelect.value}_${Date.now()}`;
+          const { error: passErr } = await client
+            .from('jlpt_passages')
+            .insert([{
+              id: passageId,
+              exam_id: examId,
+              part: uploadPartSelect.value,
+              title: pTitle,
+              content: pContent
+            }]);
+          if (passErr) throw passErr;
+        }
+      }
+
+      // 3. Batch Insert Questions
+      uploadProgressStatus.textContent = `⏳ Đang tải ${parsedQuestionsList.length} câu hỏi lên Database...`;
+      const part = uploadPartSelect.value;
+      const sectionTitle = uploadSectionTitleInput.value.trim() || 'Câu hỏi trắc nghiệm';
+
+      const payload = parsedQuestionsList.map((q, idx) => ({
+        id: `q_${part}_${examId}_${Date.now()}_${idx + 1}`,
+        exam_id: examId,
+        part: part,
+        question_number: q.question_number || (idx + 1),
+        section_title: sectionTitle,
+        passage_id: passageId,
+        question_text: q.question_text,
+        options: q.options,
+        correct_option: q.correct_option,
+        explanation: q.explanation || `Đáp án đúng là lựa chọn số ${q.correct_option}`
+      }));
+
+      const { error: qErr } = await client
+        .from('jlpt_questions')
+        .insert(payload);
+
+      if (qErr) throw qErr;
+
+      uploadProgressStatus.className = 'upload-status-text success';
+      uploadProgressStatus.textContent = `✅ Đã tải thành công ${parsedQuestionsList.length} câu hỏi lên Database!`;
+
+      alert(`🎉 Thành công! Đã đẩy ${parsedQuestionsList.length} câu hỏi trực tiếp lên cơ sở dữ liệu Supabase.`);
+
+      // Refresh exams list and reset
+      await renderMainMenu();
+      await populateUploadExamsList();
+      uploadRawText.value = '';
+      parsedQuestionsList = [];
+      uploadPreviewSection.classList.add('hidden');
+    } catch (err) {
+      console.error("Upload error:", err);
+      uploadProgressStatus.className = 'upload-status-text error';
+      uploadProgressStatus.textContent = `❌ Lỗi: ${err.message || err}`;
+
+      if (err.code === '42501' || (err.message && (err.message.includes('permission denied') || err.message.includes('violates row-level security')))) {
+        alert("⚠️ Supabase báo lỗi quyền ghi (Permission denied / RLS)! Database cần được mở quyền INSERT. Hệ thống sẽ mở hướng dẫn cấu hình cho bạn.");
+        if (supabaseRlsModal) supabaseRlsModal.classList.remove('hidden');
+      } else {
+        alert("Có lỗi khi đẩy câu hỏi lên Supabase: " + (err.message || err));
+      }
+    } finally {
+      executeUploadBtn.disabled = false;
+    }
+  }
+
+  if (executeUploadBtn) {
+    executeUploadBtn.addEventListener('click', uploadQuestionsToSupabase);
+  }
+
+  // RLS guidance modal interactions
+  if (openRlsGuideBtn) {
+    openRlsGuideBtn.addEventListener('click', () => {
+      if (supabaseRlsModal) supabaseRlsModal.classList.remove('hidden');
+    });
+  }
+
+  if (closeRlsModalBtn) {
+    closeRlsModalBtn.addEventListener('click', () => {
+      if (supabaseRlsModal) supabaseRlsModal.classList.add('hidden');
+    });
+  }
+
+  if (closeRlsConfirmBtn) {
+    closeRlsConfirmBtn.addEventListener('click', () => {
+      if (supabaseRlsModal) supabaseRlsModal.classList.add('hidden');
+    });
+  }
+
+  if (copySqlBtn && rlsSqlCode) {
+    copySqlBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(rlsSqlCode.value).then(() => {
+        copySqlBtn.textContent = '✓ Đã sao chép!';
+        setTimeout(() => {
+          copySqlBtn.textContent = '📋 Sao chép SQL';
+        }, 2500);
+      }).catch(err => {
+        rlsSqlCode.select();
+        document.execCommand('copy');
+        copySqlBtn.textContent = '✓ Đã sao chép!';
+      });
+    });
+  }
+
   async function startApp() {
     await initSupabase();
     loadSettings();
@@ -1186,3 +1697,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   startApp();
 });
+

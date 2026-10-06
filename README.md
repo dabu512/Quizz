@@ -76,8 +76,12 @@ Truy cập qua địa chỉ `http://localhost:8080` (hoặc cổng tương ứng
    - Cơ chế hiển thị lỗi mất kết nối DB trực tiếp trên màn hình menu chính giúp chẩn đoán lỗi cấu hình.
 4. **Dọn dẹp mã nguồn**:
    - Loại bỏ hoàn toàn tệp dữ liệu cứng ngoại tuyến (`parsed_questions_jlpt.json` và `questions_data.js`).
+5. **Đẩy câu hỏi trực tiếp lên Database (Direct Importer)**:
+   - Cho phép nhập/dán văn bản câu hỏi tự nhiên từ file Word, tài liệu mà không cần tạo các file JSON cồng kềnh.
+   - Trình phân tích thông minh tự động bóc tách nội dung câu hỏi, 4 phương án, đáp án đúng và giải thích.
+   - Hỗ trợ tạo đề thi mới hoặc bổ sung vào đề có sẵn, kèm bài đọc ngữ cảnh (Passage).
+   - Xem trước trực quan và đẩy trực tiếp vào các bảng `jlpt_exams`, `jlpt_passages`, `jlpt_questions` trên Supabase chỉ với 1 click.
 
 ### 🛠️ Kế hoạch tiếp theo (Đề xuất)
-- **Tải lên đề thi (Admin Panel)**: Tạo trang admin để giáo viên có thể tải lên đề thi mới (bằng cách parse file Word/JSON trực tiếp lên Supabase).
 - **Hệ thống tài khoản (Auth)**: Cho phép người học đăng nhập để lưu kết quả thi lịch sử lên bảng dữ liệu Supabase cá nhân, theo dõi biểu đồ tiến bộ học tập.
 - **Phần thi Nghe hiểu (Choukai)**: Tích hợp trình phát audio và câu hỏi nghe hiểu.
